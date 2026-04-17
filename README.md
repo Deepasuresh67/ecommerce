@@ -19,7 +19,7 @@ https://d1zro28al7bpzb.cloudfront.net
 | IaC | Terraform|
 
 ## Architecture
-
+```
 ┌─────────────────────────────────────────────────────────┐
 │                        USER                             │
 │                    (Web Browser)                        │
@@ -59,6 +59,7 @@ https://d1zro28al7bpzb.cloudfront.net
                          │  └─────────────────────┘     │
                          └──────────────────────────────┘
 
+```
 **Data Flow:**
 Frontend → API Gateway → AWS Lambda → DynamoDB
 
