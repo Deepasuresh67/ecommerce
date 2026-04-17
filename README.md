@@ -21,23 +21,44 @@ API Gateway -> https://8h0awzpfti.execute-api.ap-southeast-1.amazonaws.com/v1
 
 ## Architecture
 
-User Browser
-     │
-     ▼
-  CloudFront (CDN)
-     │
-     ▼
-  S3 Bucket (Static Frontend)
-     │
-     ▼
-  API Gateway
-     │
-     ▼
-  AWS Lambda (Python)
-     │
-     ▼
-  DynamoDB (NoSQL Database)
-
+┌─────────────────────────────────────────────────────────┐
+│                        USER                             │
+│                    (Web Browser)                        │
+└─────────────────────┬───────────────────────────────────┘
+                      │  HTTPS Request
+                      ▼
+┌─────────────────────────────────────────────────────────┐
+│                   CLOUDFRONT                            │
+│                (CDN / Edge Cache)                       │
+└────────────┬──────────────────────┬─────────────────────┘
+             │ Static Assets        │ API Requests
+             ▼                      ▼
+┌────────────────────┐   ┌──────────────────────────────┐
+│     S3 BUCKET      │   │        API GATEWAY           │
+│  (Frontend Hosting)│   │   (REST API - /v1 routes)    │
+│  HTML / CSS / JS   │   └──────────────┬───────────────┘
+└────────────────────┘                  │ Invoke
+                                        ▼
+                         ┌──────────────────────────────┐
+                         │       AWS LAMBDA             │
+                         │      (Python - boto3)        │
+                         │  ┌──────────────────────┐    │
+                         │  │  products/handler.py  │   │
+                         │  │  cart/handler.py      │   │
+                         │  │  orders/handler.py    │   │
+                         │  └──────────────────────┘    │
+                         └──────────────┬───────────────┘
+                                        │ Read / Write
+                                        ▼
+                         ┌──────────────────────────────┐
+                         │          DYNAMODB            │
+                         │        (NoSQL Database)      │
+                         │  ┌─────────────────────┐     │
+                         │  │  dee-products        │    │
+                         │  │  dee-cart            │    │
+                         │  │  dee-orders          │    │
+                         │  └─────────────────────┘     │
+                         └──────────────────────────────┘
 
 **Data Flow:**
 Frontend → API Gateway → AWS Lambda → DynamoDB
