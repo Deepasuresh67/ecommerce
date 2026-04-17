@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEE STORE</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --surface2: #1a1a1a;
+    --border: #2a2a2a;
+    --accent: #e8ff00;
+    --text: #f0f0f0;
+    --muted: #666;
+    --success: #00e676;
+    --danger: #ff1744;
+    --card-bg: #141414;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Mono', monospace; min-height: 100vh; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events: none; z-index: 1000; opacity: 0.4; }
+
+  /* ── LOGIN SCREEN ── */
+  #login-screen {
+    position: fixed; inset: 0; z-index: 999;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--bg);
+  }
+  .login-box {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    width: 100%; max-width: 360px;
+    position: relative;
+    overflow: hidden;
+  }
+  .login-box::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 100%; height: 3px; background: var(--accent);
+  }
+  .login-logo {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 1.75rem; letter-spacing: -0.03em;
+    color: var(--accent); text-transform: uppercase;
+    margin-bottom: 0.25rem;
+  }
+  .login-logo span { color: var(--text); }
+  .login-tagline {
+    font-size: 0.65rem; text-transform: uppercase;
+    letter-spacing: 0.15em; color: var(--muted); margin-bottom: 2rem;
+  }
+  .login-label {
+    font-size: 0.65rem; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--muted); display: block; margin-bottom: 0.4rem;
+  }
+  .login-input {
+    width: 100%; background: var(--surface2); border: 1px solid var(--border);
+    color: var(--text); font-family: 'DM Mono', monospace; font-size: 0.85rem;
+    padding: 0.75rem 1rem; outline: none; transition: border-color 0.2s;
+    margin-bottom: 1.25rem;
+  }
+  .login-input:focus { border-color: var(--accent); }
+  .login-input.shake {
+    animation: shake 0.35s ease;
+    border-color: var(--danger);
+  }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20%      { transform: translateX(-6px); }
+    60%      { transform: translateX(6px); }
+  }
+  .login-btn {
+    width: 100%; background: var(--accent); color: #000;
+    border: none; font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em;
+    padding: 0.85rem; cursor: pointer; transition: all 0.2s;
+  }
+  .login-btn:hover { background: #fff; }
+  .login-error {
+    font-size: 0.7rem; color: var(--danger);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-top: 0.75rem; min-height: 1rem;
+  }
+  .login-note {
+    font-size: 0.62rem; color: var(--muted); margin-top: 1.5rem;
+    line-height: 1.6;
+  }
+
+  /* ── APP ── */
+  #app { display: none; }
+  header { position: sticky; top: 0; z-index: 100; background: rgba(10,10,10,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 2rem; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+  .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem; letter-spacing: -0.03em; color: var(--accent); text-transform: uppercase; }
+  .logo span { color: var(--text); }
+  .header-right { display: flex; align-items: center; gap: 0.5rem; }
+  nav { display: flex; gap: 0.25rem; }
+  .nav-btn { background: none; border: 1px solid transparent; color: var(--muted); font-family: 'DM Mono', monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.5rem 1rem; cursor: pointer; border-radius: 4px; transition: all 0.2s; }
+  .nav-btn:hover { color: var(--text); border-color: var(--border); }
+  .nav-btn.active { color: var(--accent); border-color: var(--accent); background: rgba(232,255,0,0.05); }
+  .cart-count { display: inline-flex; align-items: center; justify-content: center; background: var(--accent); color: #000; font-size: 0.6rem; font-weight: 700; width: 16px; height: 16px; border-radius: 50%; margin-left: 4px; vertical-align: middle; }
+  /* User badge + logout */
+  .user-badge {
+    display: flex; align-items: center; gap: 0.6rem;
+    border-left: 1px solid var(--border); padding-left: 1rem; margin-left: 0.5rem;
+  }
+  .user-avatar {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--accent); color: #000;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.75rem;
+    text-transform: uppercase; flex-shrink: 0;
+  }
+  .user-name {
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--text); max-width: 100px; overflow: hidden;
+    text-overflow: ellipsis; white-space: nowrap;
+  }
+  .logout-btn {
+    background: none; border: 1px solid var(--border); color: var(--muted);
+    font-family: 'DM Mono', monospace; font-size: 0.65rem;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 0.3rem 0.65rem; cursor: pointer; border-radius: 3px; transition: all 0.2s;
+  }
+  .logout-btn:hover { border-color: var(--danger); color: var(--danger); }
+
+  main { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+  .page { display: none; animation: fadeIn 0.3s ease; }
+  .page.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .page-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+  .page-title { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; text-transform: uppercase; letter-spacing: -0.03em; }
+  .page-title .accent { color: var(--accent); }
+  .page-subtitle { color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; }
+  .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .product-card { background: var(--card-bg); padding: 1.5rem; transition: background 0.2s; position: relative; overflow: hidden; }
+  .product-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 0; background: var(--accent); transition: height 0.3s; }
+  .product-card:hover { background: var(--surface2); }
+  .product-card:hover::before { height: 100%; }
+  .product-id { font-size: 0.6rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem; }
+  .product-name { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem; }
+  .product-price { font-size: 1.25rem; font-weight: 500; color: var(--accent); margin-bottom: 1.25rem; }
+  .product-price .currency { font-size: 0.75rem; color: var(--muted); }
+  .add-to-cart-btn { width: 100%; background: transparent; border: 1px solid var(--border); color: var(--text); font-family: 'DM Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.6rem; cursor: pointer; transition: all 0.2s; }
+  .add-to-cart-btn:hover { background: var(--accent); color: #000; border-color: var(--accent); }
+  .loading { display: flex; align-items: center; gap: 0.75rem; color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 3rem 0; }
+  .spinner { width: 16px; height: 16px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .cart-layout { display: grid; grid-template-columns: 1fr 320px; gap: 1.5rem; align-items: start; }
+  .cart-items-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .cart-item { background: var(--card-bg); display: flex; align-items: center; justify-content: space-between; padding: 20px; border-bottom: 1px solid #333; gap: 1rem; }
+  .cart-item-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; flex: 1; }
+  .cart-item-qty { display: flex; align-items: center; gap: 10px; background: var(--surface2); border: 1px solid var(--border); padding: 0.25rem 0.5rem; }
+  .cart-item-qty span { font-size: 0.85rem; min-width: 20px; text-align: center; }
+  .qty-btn { background: #111; color: white; border: 1px solid #444; padding: 5px 10px; cursor: pointer; font-family: 'DM Mono', monospace; transition: color 0.2s; }
+  .qty-btn:hover { color: var(--accent); }
+  .cart-item-price { color: #d4ff00; font-weight: bold; font-size: 0.9rem; min-width: 80px; text-align: right; }
+  .remove-btn { background: none; border: none; color: #888; cursor: pointer; font-size: 1rem; transition: color 0.2s; padding: 0.25rem; }
+  .remove-btn:hover { color: var(--danger); }
+  .cart-summary { background: var(--card-bg); border: 1px solid var(--border); padding: 1.5rem; position: sticky; top: 80px; }
+  .summary-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
+  .summary-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; font-size: 0.8rem; }
+  .summary-row.total { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; }
+  .summary-row.total span:last-child { color: var(--accent); }
+  .summary-label { color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.7rem; }
+  .checkout-btn { width: 100%; background: var(--accent); color: #000; border: none; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.9rem; cursor: pointer; margin-top: 1.25rem; transition: all 0.2s; }
+  .checkout-btn:hover { background: #fff; transform: translateY(-1px); }
+  .checkout-btn:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; transform: none; }
+  .orders-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .order-card { background: var(--card-bg); padding: 1.5rem; animation: fadeIn 0.3s ease; }
+  .order-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
+  .order-id-text { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted); flex: 1; word-break: break-all; }
+  .order-total { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--accent); font-size: 1rem; }
+  .order-badge { background: rgba(0,230,118,0.1); color: var(--success); border: 1px solid rgba(0,230,118,0.3); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.2rem 0.6rem; border-radius: 2px; }
+  .order-items-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+  .order-item-tag { background: var(--surface2); border: 1px solid var(--border); font-size: 0.7rem; padding: 0.25rem 0.6rem; color: var(--muted); }
+  .empty-state { text-align: center; padding: 4rem 2rem; color: var(--muted); }
+  .empty-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.5; }
+  .empty-text { font-family: 'Syne', sans-serif; font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text); }
+  .empty-sub { font-size: 0.75rem; }
+  #toast-container { position: fixed; bottom: 2rem; right: 2rem; z-index: 9999; display: flex; flex-direction: column; gap: 0.5rem; }
+  .toast { background: var(--surface2); border: 1px solid var(--border); border-left: 3px solid var(--accent); padding: 0.75rem 1.25rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; animation: toastIn 0.3s ease; max-width: 320px; word-break: break-word; }
+  .toast.error { border-left-color: var(--danger); }
+  .toast.success { border-left-color: var(--success); }
+  @keyframes toastIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); }
+  @media (max-width: 768px) {
+    .cart-layout { grid-template-columns: 1fr; }
+    .products-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+    main { padding: 1rem; }
+    .cart-item { flex-wrap: wrap; }
+    .user-name { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── LOGIN SCREEN ── -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">Dee<span>Store</span></div>
+    <div class="login-tagline">// Sign in to continue</div>
+
+    <label class="login-label" for="login-username">Username</label>
+    <input
+      class="login-input" type="text" id="login-username"
+      placeholder="e.g. user_001" autocomplete="off"
+      onkeydown="if(event.key==='Enter') handleLogin()"
+    >
+
+    <button class="login-btn" onclick="handleLogin()">Enter Store →</button>
+    <div class="login-error" id="login-error"></div>
+    <div class="login-note">No account needed — just pick any username.<br>Your cart &amp; orders will be tied to it.</div>
+  </div>
+</div>
+
+<!-- ── APP ── -->
+<div id="app">
+  <header>
+    <div class="logo">Dee<span>Store</span></div>
+    <div class="header-right">
+      <nav>
+        <button class="nav-btn active" id="nav-products" onclick="showPage('products', this)">Products</button>
+        <button class="nav-btn" id="nav-cart"     onclick="showPage('cart', this)">Cart <span class="cart-count" id="cart-count">0</span></button>
+        <button class="nav-btn" id="nav-orders"   onclick="showPage('orders', this)">Orders</button>
+      </nav>
+      <div class="user-badge">
+        <div class="user-avatar" id="user-avatar">?</div>
+        <span class="user-name" id="user-name-display">—</span>
+        <button class="logout-btn" onclick="handleLogout()">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- PRODUCTS -->
+    <div class="page active" id="page-products">
+      <div class="page-header">
+        <h1 class="page-title">All <span class="accent">Products</span></h1>
+        <span class="page-subtitle" id="product-count">— Loading</span>
+      </div>
+      <div id="products-container">
+        <div class="loading"><div class="spinner"></div> Fetching products...</div>
+      </div>
+    </div>
+
+    <!-- CART -->
+    <div class="page" id="page-cart">
+      <div class="page-header">
+        <h1 class="page-title">Your <span class="accent">Cart</span></h1>
+      </div>
+      <div class="cart-layout">
+        <div id="cart-items-container"></div>
+        <div class="cart-summary">
+          <div class="summary-title">Order Summary</div>
+          <div class="summary-row"><span class="summary-label">User</span><span id="summary-user" style="color:var(--accent);font-size:0.75rem;">—</span></div>
+          <div class="summary-row"><span class="summary-label">Items</span><span id="summary-items">0</span></div>
+          <div class="summary-row"><span class="summary-label">Subtotal</span><span id="summary-subtotal">₹0</span></div>
+          <div class="summary-row total"><span>Total</span><span id="summary-total">₹0</span></div>
+          <button class="checkout-btn" id="checkout-btn" onclick="placeOrder()" disabled>Place Order</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ORDERS -->
+    <div class="page" id="page-orders">
+      <div class="page-header">
+        <h1 class="page-title">My <span class="accent">Orders</span></h1>
+        <span class="page-subtitle" id="order-count"></span>
+      </div>
+      <div id="orders-container">
+        <div class="loading"><div class="spinner"></div> Fetching orders...</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="toast-container"></div>
+
+<script>
+const API = 'https://8h0awzpfti.execute-api.ap-southeast-1.amazonaws.com/v1';
+
+let allProducts = [];
+let localCart   = [];
+
+// ─── AUTH ─────────────────────────────────────────────────────────────────────
+function getUserId() {
+  return localStorage.getItem('dee_user_id');
+}
+
+function handleLogin() {
+  const input = document.getElementById('login-username');
+  const errEl = document.getElementById('login-error');
+  const val   = input.value.trim();
+
+  errEl.textContent = '';
+
+  if (!val) {
+    input.classList.add('shake');
+    errEl.textContent = '⚠ Username cannot be empty';
+    setTimeout(() => input.classList.remove('shake'), 400);
+    input.focus();
+    return;
+  }
+  if (val.length < 3) {
+    input.classList.add('shake');
+    errEl.textContent = '⚠ At least 3 characters required';
+    setTimeout(() => input.classList.remove('shake'), 400);
+    return;
+  }
+  if (!/^[a-zA-Z0-9_\-]+$/.test(val)) {
+    input.classList.add('shake');
+    errEl.textContent = '⚠ Only letters, numbers, _ and - allowed';
+    setTimeout(() => input.classList.remove('shake'), 400);
+    return;
+  }
+
+  localStorage.setItem('dee_user_id', val);
+  startApp();
+}
+
+function handleLogout() {
+  localStorage.removeItem('dee_user_id');
+
+  // Reset state
+  allProducts = [];
+  localCart   = [];
+  document.getElementById('cart-count').textContent = '0';
+
+  // Show login, hide app
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('login-username').value = '';
+  document.getElementById('login-error').textContent = '';
+
+  showToast('Logged out', '');
+}
+
+function startApp() {
+  const userId = getUserId();
+
+  // Update header UI
+  document.getElementById('user-avatar').textContent      = userId.charAt(0).toUpperCase();
+  document.getElementById('user-name-display').textContent = userId;
+  document.getElementById('summary-user').textContent      = userId;
+
+  // Show app, hide login
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display          = 'block';
+
+  // Reset to products page
+  showPage('products', document.getElementById('nav-products'));
+}
+
+// ─── HELPERS ──────────────────────────────────────────────────────────────────
+function showToast(msg, type = '') {
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = 'toast ' + type;
+  t.textContent = msg;
+  c.appendChild(t);
+  setTimeout(() => t.remove(), 3000);
+}
+
+function showPage(name, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  if (btn) btn.classList.add('active');
+  if (name === 'products') loadProducts();
+  if (name === 'cart')     loadCart();
+  if (name === 'orders')   loadOrders();
+}
+
+// ─── PRODUCTS ─────────────────────────────────────────────────────────────────
+async function loadProducts() {
+  const container = document.getElementById('products-container');
+  container.innerHTML = '<div class="loading"><div class="spinner"></div> Fetching products...</div>';
+  try {
+    const res = await fetch(API + '/products');
+
+    // Show HTTP error clearly
+    if (!res.ok) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">⚠️</div>
+          <div class="empty-text">API Error ${res.status}</div>
+          <div class="empty-sub" style="margin-top:0.5rem;font-size:0.7rem;color:var(--muted);">
+            ${res.statusText} — <code style="color:var(--accent)">${API}/products</code>
+          </div>
+        </div>`;
+      console.error('HTTP Error:', res.status, res.statusText);
+      return;
+    }
+
+    const raw  = await res.text();
+    console.log('RAW RESPONSE:', raw);
+
+    let data;
+    try {
+      data = JSON.parse(raw);
+    } catch(parseErr) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">⚠️</div>
+          <div class="empty-text">Invalid JSON</div>
+          <div class="empty-sub" style="margin-top:0.5rem;word-break:break-all;font-size:0.65rem;color:var(--muted);">${raw.substring(0, 200)}</div>
+        </div>`;
+      return;
+    }
+
+    // Handle all common response shapes
+    if (Array.isArray(data)) {
+      allProducts = data;
+    } else if (data.body) {
+      const parsed = typeof data.body === 'string' ? JSON.parse(data.body) : data.body;
+      allProducts = Array.isArray(parsed) ? parsed : parsed.Items || [];
+    } else if (data.Items) {
+      allProducts = data.Items;
+    } else if (typeof data === 'object') {
+      // Last resort: try to find any array value in the response object
+      const arrVal = Object.values(data).find(v => Array.isArray(v));
+      allProducts = arrVal || [];
+      if (!arrVal) console.warn('Unexpected response shape:', data);
+    } else {
+      allProducts = [];
+    }
+
+    if (!allProducts.length) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">📦</div>
+          <div class="empty-text">No Products Found</div>
+          <div class="empty-sub" style="margin-top:0.5rem;font-size:0.65rem;color:var(--muted);">Response: <code style="color:var(--accent)">${JSON.stringify(data).substring(0,150)}</code></div>
+        </div>`;
+      return;
+    }
+
+    renderProducts();
+  } catch (e) {
+    console.error('PRODUCT FETCH ERROR:', e);
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">🔌</div>
+        <div class="empty-text">Network Error</div>
+        <div class="empty-sub" style="margin-top:0.5rem;font-size:0.7rem;color:var(--muted);">
+          ${e.message}<br><br>
+          Check: CORS policy · API URL · Network connection<br>
+          <code style="color:var(--accent);font-size:0.65rem;">${API}/products</code>
+        </div>
+        <button onclick="loadProducts()" style="margin-top:1.5rem;background:none;border:1px solid var(--border);color:var(--text);font-family:'DM Mono',monospace;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;padding:0.6rem 1.25rem;cursor:pointer;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">↺ Retry</button>
+      </div>`;
+  }
+}
+
+function renderProducts() {
+  document.getElementById('product-count').textContent = `— ${allProducts.length} items`;
+  document.getElementById('products-container').innerHTML =
+    '<div class="products-grid">' +
+    allProducts.map(p => `
+      <div class="product-card">
+        <div class="product-id">SKU #${String(p.product_id).padStart(3, '0')}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-price"><span class="currency">₹ </span>${Number(p.price).toLocaleString('en-IN')}</div>
+        <button class="add-to-cart-btn" onclick="addToCart(${p.product_id})">+ Add to Cart</button>
+      </div>
+    `).join('') +
+    '</div>';
+}
+
+// ─── CART ─────────────────────────────────────────────────────────────────────
+async function addToCart(product_id) {
+  const userId = getUserId();
+  await fetch(API + '/cart', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ user_id: userId, product_id, quantity: 1 })
+  });
+  showToast('Added to cart', 'success');
+  loadCart();
+}
+
+async function loadCart() {
+  const userId = getUserId();
+  const res    = await fetch(API + `/cart?user_id=${userId}`);
+  const data   = await res.json();
+  const items  = Array.isArray(data) ? data : data.Items || [];
+
+  localCart = items.map(c => {
+    const product = allProducts.find(p => p.product_id == c.product_id);
+    return { ...c, name: product ? product.name : 'Unknown', price: product ? Number(product.price) : 0 };
+  });
+
+  renderCart();
+  updateCartCount();
+}
+
+function updateCartCount() {
+  document.getElementById('cart-count').textContent = localCart.reduce((s, i) => s + i.quantity, 0);
+}
+
+function renderCart() {
+  const container = document.getElementById('cart-items-container');
+  if (!localCart.length) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">🛒</div>
+        <div class="empty-text">Cart is Empty</div>
+        <div class="empty-sub">Add products to get started</div>
+      </div>`;
+    document.getElementById('checkout-btn').disabled = true;
+    document.getElementById('summary-items').textContent    = '0';
+    document.getElementById('summary-subtotal').textContent = '₹0';
+    document.getElementById('summary-total').textContent    = '₹0';
+    return;
+  }
+
+  let total = 0, totalItems = 0;
+  container.innerHTML = localCart.map(item => {
+    const itemTotal = item.price * item.quantity;
+    total      += itemTotal;
+    totalItems += item.quantity;
+    return `
+      <div class="cart-item">
+        <input type="checkbox" class="select-item" data-id="${item.product_id}" checked>
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-qty">
+          <button class="qty-btn" onclick="changeQty(${item.product_id}, -1)">−</button>
+          <span>${item.quantity}</span>
+          <button class="qty-btn" onclick="changeQty(${item.product_id}, 1)">+</button>
+        </div>
+        <div class="cart-item-price">₹${itemTotal.toLocaleString('en-IN')}</div>
+        <button class="remove-btn" onclick="removeItem(${item.product_id})">×</button>
+      </div>
+    `;
+  }).join('');
+
+  document.getElementById('summary-items').textContent    = totalItems;
+  document.getElementById('summary-subtotal').textContent = '₹' + total.toLocaleString('en-IN');
+  document.getElementById('summary-total').textContent    = '₹' + total.toLocaleString('en-IN');
+  document.getElementById('checkout-btn').disabled = total === 0;
+}
+
+async function changeQty(product_id, delta) {
+  const userId = getUserId();
+  const item   = localCart.find(i => i.product_id == product_id);
+  if (!item) return;
+  if (delta === -1 && item.quantity <= 1) { await removeItem(product_id); return; }
+  await fetch(API + '/cart', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ user_id: userId, product_id, quantity: delta })
+  });
+  loadCart();
+}
+
+async function removeItem(product_id) {
+  const userId = getUserId();
+  await fetch(API + '/cart', {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ user_id: userId, product_id })
+  });
+  showToast('Item removed', '');
+  loadCart();
+}
+
+// ─── ORDERS ───────────────────────────────────────────────────────────────────
+async function loadOrders() {
+  const container = document.getElementById('orders-container');
+  try {
+    const userId = getUserId();
+    const res    = await fetch(API + `/orders?user_id=${userId}`);
+    const data   = await res.json();
+    renderOrders(Array.isArray(data) ? data : data.Items || []);
+  } catch (e) {
+    container.innerHTML = '❌ Failed to load orders';
+  }
+}
+
+function renderOrders(orders) {
+  const container = document.getElementById('orders-container');
+  if (!orders.length) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">📋</div>
+        <div class="empty-text">No Orders Yet</div>
+        <div class="empty-sub">Place your first order from the cart</div>
+      </div>`;
+    return;
+  }
+  document.getElementById('order-count').textContent = `— ${orders.length} ORDERS`;
+  container.innerHTML =
+    '<div class="orders-list">' +
+    orders.map(o => `
+      <div class="order-card">
+        <div class="order-header">
+          <div class="order-id-text">Order ID: ${o.order_id}</div>
+          <div class="order-badge">CONFIRMED</div>
+          <div class="order-total">₹${Number(o.total).toLocaleString('en-IN')}</div>
+        </div>
+        <div class="order-items-tags">
+          ${o.items.map(i => `<div class="order-item-tag">${i.name} × ${i.quantity}</div>`).join('')}
+        </div>
+        <div class="order-id-text">User: ${o.user_id}</div>
+      </div>
+    `).join('') +
+    '</div>';
+}
+
+// ─── PLACE ORDER ──────────────────────────────────────────────────────────────
+async function placeOrder() {
+  const userId       = getUserId();
+  const selectedItems = localCart.filter(item => {
+    const cb = document.querySelector(`input[data-id='${item.product_id}']`);
+    return cb && cb.checked;
+  });
+  if (!selectedItems.length) { showToast('Select items to order', 'error'); return; }
+
+  const orderData = {
+    user_id: userId,
+    items:   selectedItems,
+    total:   selectedItems.reduce((sum, i) => sum + (i.price * i.quantity), 0)
+  };
+
+  try {
+    await fetch(API + '/orders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(orderData)
+    });
+    for (let item of selectedItems) {
+      await fetch(API + '/cart', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user_id: userId, product_id: item.product_id })
+      });
+    }
+    showToast('Order placed!', 'success');
+    loadCart();
+    showPage('orders', document.getElementById('nav-orders'));
+  } catch (err) {
+    showToast('Order failed', 'error');
+  }
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+// Auto-login if user is already saved
+(function init() {
+  if (getUserId()) {
+    startApp();
+  }
+  // else: login screen is already visible by default
+})();
+</script>
+</body>
+</html>

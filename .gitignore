@@ -1,0 +1,11 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+
+# Environment variables
+.env
+
+# Node / build
+node_modules/
+dist/
