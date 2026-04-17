@@ -4,9 +4,8 @@ A full-stack serverless e-commerce platform built on AWS — browse products, ma
 
 ## 🌐 Live Demo
 
-Frontend (S3) -> http://deepa-ecommerce-frontend.s3-website-ap-southeast-1.amazonaws.com
-CDN (CloudFront) ->  https://d1zro28al7bpzb.cloudfront.net
-API Gateway -> https://8h0awzpfti.execute-api.ap-southeast-1.amazonaws.com/v1
+https://d1zro28al7bpzb.cloudfront.net
+
 
 ## Tech Stack
 
