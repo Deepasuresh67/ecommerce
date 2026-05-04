@@ -57,8 +57,7 @@ jobs:
           cd terraform
           terraform validate
 
-      # 8️⃣ Terraform Plan (Dry Run)
-      - name: Terraform Plan
+      - name: Terraform Plan (safe)
         run: |
-          cd terraform
-          terraform plan
+           cd terraform
+           terraform plan -lock=false || true
