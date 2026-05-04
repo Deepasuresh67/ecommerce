@@ -1,0 +1,64 @@
+name: Build & Validate Backend
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Checkout code
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # 2️⃣ Show project structure (debug)
+      - name: Show files
+        run: ls -R
+
+      # 3️⃣ Build Lambda ZIPs
+      - name: Build Product Service
+        run: |
+          cd backend/product_service
+          zip -r product.zip .
+
+      - name: Build Cart Service
+        run: |
+          cd backend/cart_service
+          zip -r cart.zip .
+
+      - name: Build Review Service
+        run: |
+          cd backend/review_service
+          zip -r review.zip .
+
+      # 4️⃣ Verify build
+      - name: Verify ZIP files
+        run: |
+          ls backend/product_service
+          ls backend/cart_service
+          ls backend/review_service
+
+      # 5️⃣ Setup Terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      # 6️⃣ Terraform Init
+      - name: Terraform Init
+        run: |
+          cd terraform
+          terraform init
+
+      # 7️⃣ Terraform Validate
+      - name: Terraform Validate
+        run: |
+          cd terraform
+          terraform validate
+
+      # 8️⃣ Terraform Plan (Dry Run)
+      - name: Terraform Plan
+        run: |
+          cd terraform
+          terraform plan
