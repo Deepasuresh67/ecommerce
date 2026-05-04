@@ -2,7 +2,8 @@ variable "lambda_names" {
   default = [
     "Deepa-product-service",
     "Deepa-cart-service",
-    "Deepa-orders-service"
+    "Deepa-orders-service",
+    "Deepa-review-service"
   ]
 }
 
@@ -10,7 +11,8 @@ variable "dynamodb_tables" {
   default = [
     "dee-products",
     "dee-cart",
-    "dee-orders"
+    "dee-orders",
+    "dee-reviews"
   ]
 }
 

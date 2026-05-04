@@ -42,3 +42,21 @@ resource "aws_lambda_function" "order_service" {
     ignore_changes = all
   }
 }
+
+resource "aws_lambda_function" "review_service" {
+  function_name = "Deepa-review-service"
+  role = aws_iam_role.review_lambda_role.arn
+
+  handler = "lambda_function.lambda_handler"
+  runtime = "python3.10"
+  
+  filename         = "../backend/review_service/review.zip"
+  source_code_hash = filebase64sha256("../backend/review_service/review.zip")
+  timeout = 10
+
+  environment {
+    variables = {
+      TABLE_NAME = aws_dynamodb_table.reviews.name
+    }
+  }
+}

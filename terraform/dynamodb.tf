@@ -30,3 +30,20 @@ resource "aws_dynamodb_table" "orders" {
     type = "S"
   }
 }
+
+resource "aws_dynamodb_table" "reviews" {
+  name         = "dee-reviews"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key  = "product_id"
+  range_key = "user_id"
+
+  attribute {
+    name = "product_id"
+    type = "N"
+  }
+
+  attribute {
+    name = "user_id"
+    type = "S"
+  }
+}

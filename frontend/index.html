@@ -22,112 +22,40 @@
   body { background: var(--bg); color: var(--text); font-family: 'DM Mono', monospace; min-height: 100vh; overflow-x: hidden; }
   body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events: none; z-index: 1000; opacity: 0.4; }
 
-  /* ── AUTH SCREENS ── */
-  #auth-screen {
-    position: fixed; inset: 0; z-index: 999;
-    display: flex; align-items: center; justify-content: center;
-    background: var(--bg);
-  }
-  .auth-box {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    width: 100%; max-width: 380px;
-    position: relative; overflow: hidden;
-  }
-  .auth-box::before {
-    content: ''; position: absolute; top: 0; left: 0;
-    width: 100%; height: 3px; background: var(--accent);
-  }
-  .auth-tabs {
-    display: flex; border-bottom: 1px solid var(--border);
-  }
-  .auth-tab {
-    flex: 1; background: none; border: none; color: var(--muted);
-    font-family: 'Syne', sans-serif; font-weight: 700;
-    font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em;
-    padding: 1rem; cursor: pointer; transition: all 0.2s;
-    border-bottom: 2px solid transparent; margin-bottom: -1px;
-  }
+  /* ── AUTH ── */
+  #auth-screen { position: fixed; inset: 0; z-index: 999; display: flex; align-items: center; justify-content: center; background: var(--bg); }
+  .auth-box { background: var(--card-bg); border: 1px solid var(--border); width: 100%; max-width: 380px; position: relative; overflow: hidden; }
+  .auth-box::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--accent); }
+  .auth-tabs { display: flex; border-bottom: 1px solid var(--border); }
+  .auth-tab { flex: 1; background: none; border: none; color: var(--muted); font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; padding: 1rem; cursor: pointer; transition: all 0.2s; border-bottom: 2px solid transparent; margin-bottom: -1px; }
   .auth-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
   .auth-tab:hover:not(.active) { color: var(--text); }
-
   .auth-body { padding: 2rem; }
-  .auth-logo {
-    font-family: 'Syne', sans-serif; font-weight: 800;
-    font-size: 1.75rem; letter-spacing: -0.03em;
-    color: var(--accent); text-transform: uppercase;
-    margin-bottom: 0.2rem;
-  }
+  .auth-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.75rem; letter-spacing: -0.03em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.2rem; }
   .auth-logo span { color: var(--text); }
-  .auth-tagline {
-    font-size: 0.62rem; text-transform: uppercase;
-    letter-spacing: 0.15em; color: var(--muted); margin-bottom: 1.75rem;
-  }
-
+  .auth-tagline { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); margin-bottom: 1.75rem; }
   .auth-panel { display: none; }
   .auth-panel.active { display: block; }
-
-  .auth-label {
-    font-size: 0.62rem; text-transform: uppercase;
-    letter-spacing: 0.12em; color: var(--muted); display: block; margin-bottom: 0.4rem;
-  }
-  .auth-input {
-    width: 100%; background: var(--surface2); border: 1px solid var(--border);
-    color: var(--text); font-family: 'DM Mono', monospace; font-size: 0.85rem;
-    padding: 0.75rem 1rem; outline: none; transition: border-color 0.2s;
-    margin-bottom: 1rem;
-  }
+  .auth-label { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); display: block; margin-bottom: 0.4rem; }
+  .auth-input { width: 100%; background: var(--surface2); border: 1px solid var(--border); color: var(--text); font-family: 'DM Mono', monospace; font-size: 0.85rem; padding: 0.75rem 1rem; outline: none; transition: border-color 0.2s; margin-bottom: 1rem; }
   .auth-input:focus { border-color: var(--accent); }
   .auth-input.shake { animation: shake 0.35s ease; border-color: var(--danger); }
   .auth-input.ok { border-color: var(--success); }
-
   .pw-wrapper { position: relative; margin-bottom: 1rem; }
   .pw-wrapper .auth-input { margin-bottom: 0; padding-right: 2.5rem; }
-  .pw-toggle {
-    position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%);
-    background: none; border: none; color: var(--muted); cursor: pointer;
-    font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em;
-    transition: color 0.2s; padding: 0;
-  }
+  .pw-toggle { position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--muted); cursor: pointer; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; transition: color 0.2s; padding: 0; font-family: 'DM Mono', monospace; }
   .pw-toggle:hover { color: var(--accent); }
-
-  .pw-strength {
-    height: 3px; background: var(--border); margin-bottom: 1rem; border-radius: 2px; overflow: hidden;
-  }
+  .pw-strength { height: 3px; background: var(--border); margin-bottom: 1rem; border-radius: 2px; overflow: hidden; }
   .pw-strength-bar { height: 100%; width: 0; transition: width 0.3s, background 0.3s; }
-
-  .auth-btn {
-    width: 100%; background: var(--accent); color: #000;
-    border: none; font-family: 'Syne', sans-serif; font-weight: 700;
-    font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em;
-    padding: 0.85rem; cursor: pointer; transition: all 0.2s; margin-top: 0.25rem;
-  }
+  .auth-btn { width: 100%; background: var(--accent); color: #000; border: none; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.85rem; cursor: pointer; transition: all 0.2s; margin-top: 0.25rem; }
   .auth-btn:hover { background: #fff; }
   .auth-btn:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; }
+  .auth-error { font-size: 0.68rem; color: var(--danger); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.75rem; min-height: 1rem; }
+  .auth-success-msg { font-size: 0.68rem; color: var(--success); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.75rem; min-height: 1rem; }
+  .auth-hint { font-size: 0.6rem; color: var(--muted); margin-top: 1.25rem; line-height: 1.7; border-top: 1px solid var(--border); padding-top: 1rem; }
+  @keyframes shake { 0%,100% { transform: translateX(0); } 20% { transform: translateX(-6px); } 60% { transform: translateX(6px); } }
 
-  .auth-error {
-    font-size: 0.68rem; color: var(--danger);
-    text-transform: uppercase; letter-spacing: 0.08em;
-    margin-top: 0.75rem; min-height: 1rem;
-  }
-  .auth-success {
-    font-size: 0.68rem; color: var(--success);
-    text-transform: uppercase; letter-spacing: 0.08em;
-    margin-top: 0.75rem; min-height: 1rem;
-  }
-
-  .auth-hint {
-    font-size: 0.6rem; color: var(--muted); margin-top: 1.25rem; line-height: 1.7;
-    border-top: 1px solid var(--border); padding-top: 1rem;
-  }
-
-  @keyframes shake {
-    0%,100% { transform: translateX(0); }
-    20%      { transform: translateX(-6px); }
-    60%      { transform: translateX(6px); }
-  }
-
-  /* ── APP ── */
+  /* ── APP SHELL ── */
   #app { display: none; }
   header { position: sticky; top: 0; z-index: 100; background: rgba(10,10,10,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 2rem; height: 64px; display: flex; align-items: center; justify-content: space-between; }
   .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem; letter-spacing: -0.03em; color: var(--accent); text-transform: uppercase; }
@@ -144,82 +72,234 @@
   .logout-btn { background: none; border: 1px solid var(--border); color: var(--muted); font-family: 'DM Mono', monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.3rem 0.65rem; cursor: pointer; border-radius: 3px; transition: all 0.2s; }
   .logout-btn:hover { border-color: var(--danger); color: var(--danger); }
 
+  /* ── PAGES ── */
   main { max-width: 1400px; margin: 0 auto; padding: 2rem; }
   .page { display: none; animation: fadeIn 0.3s ease; }
   .page.active { display: block; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-  .page-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+  .page-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
   .page-title { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; text-transform: uppercase; letter-spacing: -0.03em; }
   .page-title .accent { color: var(--accent); }
   .page-subtitle { color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; }
-  .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
-  .product-card { background: var(--card-bg); padding: 1.5rem; transition: background 0.2s; position: relative; overflow: hidden; }
-  .product-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 0; background: var(--accent); transition: height 0.3s; }
+
+  /* ── PRODUCTS ── */
+  .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .product-card { background: var(--card-bg); transition: background 0.2s; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+  .product-card::after { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 0; background: var(--accent); transition: height 0.35s; pointer-events: none; }
   .product-card:hover { background: var(--surface2); }
-  .product-card:hover::before { height: 100%; }
-  .product-id { font-size: 0.6rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem; }
-  .product-name { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem; }
-  .product-price { font-size: 1.25rem; font-weight: 500; color: var(--accent); margin-bottom: 1.25rem; }
-  .product-price .currency { font-size: 0.75rem; color: var(--muted); }
-  .add-to-cart-btn { width: 100%; background: transparent; border: 1px solid var(--border); color: var(--text); font-family: 'DM Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.6rem; cursor: pointer; transition: all 0.2s; }
+  .product-card:hover::after { height: 100%; }
+
+  .product-img-wrap { width: 100%; aspect-ratio: 4/3; background: var(--surface2); position: relative; overflow: hidden; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+  .product-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+  .product-card:hover .product-img-wrap img { transform: scale(1.04); }
+
+  .product-info { padding: 1.25rem; flex: 1; display: flex; flex-direction: column; }
+  .product-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; }
+  .product-id { font-size: 0.6rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.15em; }
+  .product-name { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; line-height: 1.3; }
+
+  /* avg stars on product meta */
+  .product-avg-stars { display: flex; align-items: center; gap: 0.35rem; margin-bottom: 0.75rem; }
+  .product-avg-stars .stars-display { font-size: 0.78rem; letter-spacing: 0.05em; color: var(--accent); }
+  .product-avg-stars .review-count { font-size: 0.6rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+
+  .product-price { font-size: 1.2rem; font-weight: 500; color: var(--accent); margin-bottom: 1rem; }
+  .product-price .currency { font-size: 0.72rem; color: var(--muted); }
+  .add-to-cart-btn { width: 100%; background: transparent; border: 1px solid var(--border); color: var(--text); font-family: 'DM Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.65rem; cursor: pointer; transition: all 0.2s; margin-top: auto; }
   .add-to-cart-btn:hover { background: var(--accent); color: #000; border-color: var(--accent); }
-  .loading { display: flex; align-items: center; gap: 0.75rem; color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 3rem 0; }
-  .spinner { width: 16px; height: 16px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
+  .add-to-cart-btn.added { background: var(--success); color: #000; border-color: var(--success); }
+
+  /* ── REVIEWS TOGGLE BTN ── */
+  .reviews-toggle-btn {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-top: none;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  .reviews-toggle-btn:hover { color: var(--accent); border-color: var(--accent); }
+  .reviews-toggle-btn.open { color: var(--accent); border-color: var(--accent); background: rgba(232,255,0,0.04); }
+  .reviews-toggle-btn .chevron { display: inline-block; transition: transform 0.25s; font-size: 0.6rem; }
+  .reviews-toggle-btn.open .chevron { transform: rotate(180deg); }
+
+  /* ── REVIEWS PANEL ── */
+  .reviews-panel {
+    display: none;
+    border: 1px solid var(--border);
+    border-top: none;
+    background: #0f0f0f;
+    padding: 1rem;
+    animation: slideDown 0.2s ease;
+  }
+  .reviews-panel.open { display: block; }
+  @keyframes slideDown { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* existing reviews list */
+  .reviews-list { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1rem; }
+  .review-item { border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; }
+  .review-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .review-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.25rem; }
+  .review-user { font-size: 0.65rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; }
+  .review-stars { font-size: 0.7rem; letter-spacing: 0.04em; color: var(--accent); }
+  .review-text { font-size: 0.75rem; color: var(--muted); line-height: 1.6; }
+  .reviews-empty { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; text-align: center; padding: 0.75rem 0; }
+  .reviews-loading { display: flex; align-items: center; gap: 0.5rem; font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; justify-content: center; padding: 0.5rem 0; }
+
+  /* write a review form */
+  .review-form-title {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    padding-top: 0.85rem;
+    margin-bottom: 0.75rem;
+  }
+  .review-form-title span { color: var(--accent); }
+
+  /* star picker */
+  .star-picker { display: flex; gap: 4px; margin-bottom: 0.75rem; }
+  .star-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 2px;
+    color: var(--border);
+    transition: color 0.15s, transform 0.1s;
+    line-height: 1;
+  }
+  .star-btn:hover,
+  .star-btn.active { color: var(--accent); }
+  .star-btn:hover { transform: scale(1.2); }
+
+  .review-textarea {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    padding: 0.6rem 0.75rem;
+    outline: none;
+    resize: none;
+    transition: border-color 0.2s;
+    min-height: 70px;
+    margin-bottom: 0.75rem;
+  }
+  .review-textarea:focus { border-color: var(--accent); }
+  .review-textarea::placeholder { color: var(--muted); }
+
+  .submit-review-btn {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.55rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .submit-review-btn:hover { background: var(--accent); color: #000; }
+  .submit-review-btn:disabled { border-color: var(--border); color: var(--muted); cursor: not-allowed; background: transparent; }
+
+  .review-form-msg { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.5rem; min-height: 0.8rem; }
+  .review-form-msg.error { color: var(--danger); }
+  .review-form-msg.success { color: var(--success); }
+  .already-reviewed-note { font-size: 0.65rem; color: var(--muted); text-align: center; padding: 0.4rem; text-transform: uppercase; letter-spacing: 0.08em; border: 1px solid var(--border); background: var(--surface2); }
+
+  /* ── TOOLBAR ── */
+  .toolbar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .sort-select { background: var(--surface2); border: 1px solid var(--border); color: var(--text); font-family: 'DM Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.5rem 0.75rem; outline: none; cursor: pointer; transition: border-color 0.2s; }
+  .sort-select:focus { border-color: var(--accent); }
+  .search-input { background: var(--surface2); border: 1px solid var(--border); color: var(--text); font-family: 'DM Mono', monospace; font-size: 0.75rem; padding: 0.5rem 0.75rem; outline: none; transition: border-color 0.2s; min-width: 200px; }
+  .search-input:focus { border-color: var(--accent); }
+  .search-input::placeholder { color: var(--muted); }
+  .toolbar-label { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+
+  /* ── CART ── */
   .cart-layout { display: grid; grid-template-columns: 1fr 320px; gap: 1.5rem; align-items: start; }
-  .cart-items-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
-  .cart-item { background: var(--card-bg); display: flex; align-items: center; justify-content: space-between; padding: 20px; border-bottom: 1px solid #333; gap: 1rem; }
-  .cart-item-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; flex: 1; }
-  .cart-item-qty { display: flex; align-items: center; gap: 10px; background: var(--surface2); border: 1px solid var(--border); padding: 0.25rem 0.5rem; }
+  .cart-item { background: var(--card-bg); display: flex; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--border); gap: 1rem; transition: background 0.2s; }
+  .cart-item:hover { background: var(--surface2); }
+  .cart-item-thumb { width: 52px; height: 52px; border-radius: 4px; overflow: hidden; background: var(--surface2); flex-shrink: 0; border: 1px solid var(--border); }
+  .cart-item-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .cart-item-thumb-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 1.25rem; }
+  .cart-item-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; flex: 1; }
+  .cart-item-qty { display: flex; align-items: center; gap: 8px; background: var(--surface2); border: 1px solid var(--border); padding: 0.2rem 0.5rem; }
   .cart-item-qty span { font-size: 0.85rem; min-width: 20px; text-align: center; }
-  .qty-btn { background: #111; color: white; border: 1px solid #444; padding: 5px 10px; cursor: pointer; font-family: 'DM Mono', monospace; transition: color 0.2s; }
+  .qty-btn { background: none; color: var(--text); border: none; padding: 4px 8px; cursor: pointer; font-family: 'DM Mono', monospace; font-size: 1rem; transition: color 0.2s; }
   .qty-btn:hover { color: var(--accent); }
-  .cart-item-price { color: #d4ff00; font-weight: bold; font-size: 0.9rem; min-width: 80px; text-align: right; }
-  .remove-btn { background: none; border: none; color: #888; cursor: pointer; font-size: 1rem; transition: color 0.2s; padding: 0.25rem; }
+  .cart-item-price { color: var(--accent); font-weight: bold; font-size: 0.9rem; min-width: 80px; text-align: right; }
+  .remove-btn { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1.1rem; transition: color 0.2s; padding: 0.25rem; line-height: 1; }
   .remove-btn:hover { color: var(--danger); }
+  .cart-items-wrapper { border: 1px solid var(--border); background: var(--border); display: flex; flex-direction: column; gap: 1px; }
   .cart-summary { background: var(--card-bg); border: 1px solid var(--border); padding: 1.5rem; position: sticky; top: 80px; }
   .summary-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
   .summary-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; font-size: 0.8rem; }
   .summary-row.total { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; }
   .summary-row.total span:last-child { color: var(--accent); }
   .summary-label { color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.7rem; }
+  .summary-user-chip { color: var(--accent); font-size: 0.72rem; font-family: 'DM Mono', monospace; background: rgba(232,255,0,0.07); border: 1px solid rgba(232,255,0,0.2); padding: 0.15rem 0.5rem; border-radius: 2px; }
   .checkout-btn { width: 100%; background: var(--accent); color: #000; border: none; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.9rem; cursor: pointer; margin-top: 1.25rem; transition: all 0.2s; }
   .checkout-btn:hover { background: #fff; transform: translateY(-1px); }
   .checkout-btn:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; transform: none; }
+
+  /* ── ORDERS ── */
   .orders-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
-  .order-card { background: var(--card-bg); padding: 1.5rem; animation: fadeIn 0.3s ease; }
+  .order-card { background: var(--card-bg); padding: 1.5rem; animation: fadeIn 0.3s ease; transition: background 0.2s; }
+  .order-card:hover { background: var(--surface2); }
   .order-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
   .order-id-text { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted); flex: 1; word-break: break-all; }
   .order-total { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--accent); font-size: 1rem; }
   .order-badge { background: rgba(0,230,118,0.1); color: var(--success); border: 1px solid rgba(0,230,118,0.3); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.2rem 0.6rem; border-radius: 2px; }
   .order-items-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
   .order-item-tag { background: var(--surface2); border: 1px solid var(--border); font-size: 0.7rem; padding: 0.25rem 0.6rem; color: var(--muted); }
+
+  /* ── MISC ── */
+  .loading { display: flex; align-items: center; gap: 0.75rem; color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 3rem 0; }
+  .spinner { width: 16px; height: 16px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; flex-shrink: 0; }
+  @keyframes spin { to { transform: rotate(360deg); } }
   .empty-state { text-align: center; padding: 4rem 2rem; color: var(--muted); }
   .empty-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.5; }
   .empty-text { font-family: 'Syne', sans-serif; font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text); }
   .empty-sub { font-size: 0.75rem; }
   #toast-container { position: fixed; bottom: 2rem; right: 2rem; z-index: 9999; display: flex; flex-direction: column; gap: 0.5rem; }
-  .toast { background: var(--surface2); border: 1px solid var(--border); border-left: 3px solid var(--accent); padding: 0.75rem 1.25rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; animation: toastIn 0.3s ease; max-width: 320px; word-break: break-word; }
+  .toast { background: var(--surface2); border: 1px solid var(--border); border-left: 3px solid var(--accent); padding: 0.75rem 1.25rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; animation: toastIn 0.3s ease; max-width: 300px; }
   .toast.error { border-left-color: var(--danger); }
   .toast.success { border-left-color: var(--success); }
   @keyframes toastIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--border); }
+
   @media (max-width: 768px) {
+    header { padding: 0 1rem; }
+    main { padding: 1rem; }
     .cart-layout { grid-template-columns: 1fr; }
     .products-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
-    main { padding: 1rem; }
-    header { padding: 0 1rem; }
-    .cart-item { flex-wrap: wrap; }
     .user-name { display: none; }
     .auth-body { padding: 1.5rem; }
+    .cart-item { flex-wrap: wrap; }
   }
 </style>
 </head>
 <body>
 
-<!-- ── AUTH SCREEN ── -->
+<!-- AUTH SCREEN -->
 <div id="auth-screen">
   <div class="auth-box">
     <div class="auth-tabs">
@@ -230,65 +310,58 @@
       <div class="auth-logo">Dee<span>Store</span></div>
       <div class="auth-tagline">// Premium goods, secured access</div>
 
-      <!-- LOGIN PANEL -->
       <div class="auth-panel active" id="panel-login">
-        <label class="auth-label" for="login-user">Username</label>
+        <label class="auth-label">Username</label>
         <input class="auth-input" type="text" id="login-user" placeholder="your_username" autocomplete="username"
           onkeydown="if(event.key==='Enter')document.getElementById('login-pass').focus()">
-
-        <label class="auth-label" for="login-pass">Password</label>
+        <label class="auth-label">Password</label>
         <div class="pw-wrapper">
           <input class="auth-input" type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password"
             onkeydown="if(event.key==='Enter')handleLogin()">
-          <button class="pw-toggle" type="button" onclick="togglePw('login-pass', this)">show</button>
+          <button class="pw-toggle" onclick="togglePw('login-pass',this)">show</button>
         </div>
-
-        <button class="auth-btn" onclick="handleLogin()" id="login-btn">Sign In →</button>
+        <button class="auth-btn" id="login-btn" onclick="handleLogin()">Sign In →</button>
         <div class="auth-error" id="login-error"></div>
-        <div class="auth-hint">Don't have an account? <span style="color:var(--accent);cursor:pointer;" onclick="switchTab('signup')">Sign Up →</span></div>
+        <div class="auth-hint">No account? <span style="color:var(--accent);cursor:pointer" onclick="switchTab('signup')">Sign Up →</span></div>
       </div>
 
-      <!-- SIGNUP PANEL -->
       <div class="auth-panel" id="panel-signup">
-        <label class="auth-label" for="signup-user">Choose Username</label>
+        <label class="auth-label">Choose Username</label>
         <input class="auth-input" type="text" id="signup-user" placeholder="e.g. john_doe" autocomplete="username"
           oninput="checkUsernameInput(this)"
           onkeydown="if(event.key==='Enter')document.getElementById('signup-pass').focus()">
-
-        <label class="auth-label" for="signup-pass">Password</label>
+        <label class="auth-label">Password</label>
         <div class="pw-wrapper">
           <input class="auth-input" type="password" id="signup-pass" placeholder="Min 6 characters" autocomplete="new-password"
-            oninput="checkPasswordStrength(this.value)"
+            oninput="checkPwStrength(this.value)"
             onkeydown="if(event.key==='Enter')document.getElementById('signup-confirm').focus()">
-          <button class="pw-toggle" type="button" onclick="togglePw('signup-pass', this)">show</button>
+          <button class="pw-toggle" onclick="togglePw('signup-pass',this)">show</button>
         </div>
         <div class="pw-strength"><div class="pw-strength-bar" id="pw-bar"></div></div>
-
-        <label class="auth-label" for="signup-confirm">Confirm Password</label>
+        <label class="auth-label">Confirm Password</label>
         <div class="pw-wrapper">
           <input class="auth-input" type="password" id="signup-confirm" placeholder="Repeat password" autocomplete="new-password"
             onkeydown="if(event.key==='Enter')handleSignup()">
-          <button class="pw-toggle" type="button" onclick="togglePw('signup-confirm', this)">show</button>
+          <button class="pw-toggle" onclick="togglePw('signup-confirm',this)">show</button>
         </div>
-
-        <button class="auth-btn" onclick="handleSignup()" id="signup-btn">Create Account →</button>
+        <button class="auth-btn" id="signup-btn" onclick="handleSignup()">Create Account →</button>
         <div class="auth-error" id="signup-error"></div>
-        <div class="auth-success" id="signup-success"></div>
-        <div class="auth-hint">Already have an account? <span style="color:var(--accent);cursor:pointer;" onclick="switchTab('login')">Sign In →</span></div>
+        <div class="auth-success-msg" id="signup-success"></div>
+        <div class="auth-hint">Have an account? <span style="color:var(--accent);cursor:pointer" onclick="switchTab('login')">Sign In →</span></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ── APP ── -->
+<!-- APP -->
 <div id="app">
   <header>
     <div class="logo">Dee<span>Store</span></div>
     <div class="header-right">
       <nav>
-        <button class="nav-btn active" id="nav-products" onclick="showPage('products', this)">Products</button>
-        <button class="nav-btn" id="nav-cart" onclick="showPage('cart', this)">Cart <span class="cart-count" id="cart-count">0</span></button>
-        <button class="nav-btn" id="nav-orders" onclick="showPage('orders', this)">Orders</button>
+        <button class="nav-btn active" id="nav-products" onclick="showPage('products',this)">Products</button>
+        <button class="nav-btn" id="nav-cart" onclick="showPage('cart',this)">Cart <span class="cart-count" id="cart-count">0</span></button>
+        <button class="nav-btn" id="nav-orders" onclick="showPage('orders',this)">Orders</button>
       </nav>
       <div class="user-badge">
         <div class="user-avatar" id="user-avatar">?</div>
@@ -299,18 +372,27 @@
   </header>
 
   <main>
-    <!-- PRODUCTS -->
     <div class="page active" id="page-products">
       <div class="page-header">
         <h1 class="page-title">All <span class="accent">Products</span></h1>
         <span class="page-subtitle" id="product-count">— Loading</span>
+      </div>
+      <div class="toolbar">
+        <input class="search-input" type="text" id="search-input" placeholder="Search products..." oninput="filterProducts()">
+        <span class="toolbar-label">Sort:</span>
+        <select class="sort-select" id="sort-select" onchange="filterProducts()">
+          <option value="id-asc">ID: 1 → 9</option>
+          <option value="id-desc">ID: 9 → 1</option>
+          <option value="price-asc">Price: Low → High</option>
+          <option value="price-desc">Price: High → Low</option>
+          <option value="name-asc">Name: A → Z</option>
+        </select>
       </div>
       <div id="products-container">
         <div class="loading"><div class="spinner"></div> Fetching products...</div>
       </div>
     </div>
 
-    <!-- CART -->
     <div class="page" id="page-cart">
       <div class="page-header">
         <h1 class="page-title">Your <span class="accent">Cart</span></h1>
@@ -319,7 +401,10 @@
         <div id="cart-items-container"></div>
         <div class="cart-summary">
           <div class="summary-title">Order Summary</div>
-          <div class="summary-row"><span class="summary-label">User</span><span id="summary-user" style="color:var(--accent);font-size:0.75rem;">—</span></div>
+          <div class="summary-row">
+            <span class="summary-label">Logged in as</span>
+            <span class="summary-user-chip" id="summary-user">—</span>
+          </div>
           <div class="summary-row"><span class="summary-label">Items</span><span id="summary-items">0</span></div>
           <div class="summary-row"><span class="summary-label">Subtotal</span><span id="summary-subtotal">₹0</span></div>
           <div class="summary-row total"><span>Total</span><span id="summary-total">₹0</span></div>
@@ -328,7 +413,6 @@
       </div>
     </div>
 
-    <!-- ORDERS -->
     <div class="page" id="page-orders">
       <div class="page-header">
         <h1 class="page-title">My <span class="accent">Orders</span></h1>
@@ -344,77 +428,105 @@
 <div id="toast-container"></div>
 
 <script>
-/* ─────────────────────────────────────────────────────────
+/* ═══════════════════════════════════════════════════
    CONFIG
-───────────────────────────────────────────────────────── */
+═══════════════════════════════════════════════════ */
 const API = 'https://8h0awzpfti.execute-api.ap-southeast-1.amazonaws.com/v1';
 
-/* ─────────────────────────────────────────────────────────
-   SIMPLE HASH (SHA-256 via Web Crypto)
-   Passwords are hashed before storing — never plaintext.
-───────────────────────────────────────────────────────── */
-async function hashPassword(password) {
-  const encoder = new TextEncoder();
-  const data = encoder.encode('deestore_salt_2025_' + password);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+/* ═══════════════════════════════════════════════════
+   PRODUCT IMAGES
+═══════════════════════════════════════════════════ */
+function driveUrl(id) {
+  return `https://lh3.googleusercontent.com/d/${id}=w1000`;
+}
+const PRODUCT_IMAGES = {
+  1:  driveUrl('1yvwc-P1fpBetroLZ6NKSYdu1LlJOTkpe'),
+  2:  driveUrl('1Ce757PH-Vd0YdXvj_utFyDavgVK0Mg6Q'),
+  3:  driveUrl('19jTdweKuBSB9oa-VzsaCvDHAQTaQdrei'),
+  4:  driveUrl('18IM1HDRYlZriPrXD9n1W7fu3noCqimkh'),
+  5:  driveUrl('1H-sb3Abcuf1Xo6BgpBFYqvlUGrMDBb7g'),
+  6:  driveUrl('1PZQT8mmTqjGdrtbRzT5mYfF1PCAqCsoN'),
+  7:  driveUrl('1tPNR_QvRbFJLK5sDP59Ogad7bFHLKYVp'),
+  8:  driveUrl('1Z9---qQnKOIGMy4ouRczN2D7EjSUA046'),
+  9:  driveUrl('1u5bya45Nkeokrvfb4MHsTtmWfqutvDKd'),
+  10: driveUrl('11LpyHa97U7HPlK2MM9XhUJkLXZsghzLG'),
+  11: driveUrl('11GT-N9w9SQtSiD-EAlrcUSd9WdABklOv'),
+  12: driveUrl('1HHc79xJFxS-nYROWSSHDu8ouL5hI_gLu'),
+  13: driveUrl('1TXOdp_98RNCb8fMXUKm5qOGySSZue1kX'),
+  14: driveUrl('13NlxLkPgs82lSu0MecmXNohTFIho2pbI'),
+};
+
+/* ═══════════════════════════════════════════════════
+   PASSWORD HASHING
+═══════════════════════════════════════════════════ */
+async function hashPassword(pw) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('deestore_v2_' + pw));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
 }
 
-/* ─────────────────────────────────────────────────────────
-   PERSISTENT STORAGE HELPERS
-   Users stored as: users:<username> → { username, passwordHash, createdAt }
-   Session stored in sessionStorage (cleared on tab close)
-───────────────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════
+   USER STORAGE
+═══════════════════════════════════════════════════ */
 async function saveUser(username, passwordHash) {
-  const key = 'users:' + username.toLowerCase();
-  const val = JSON.stringify({ username, passwordHash, createdAt: Date.now() });
   try {
-    await window.storage.set(key, val);
+    await window.storage.set('users:' + username.toLowerCase(), JSON.stringify({ username, passwordHash, createdAt: Date.now() }));
     return true;
-  } catch(e) {
-    // Fallback to localStorage if storage API unavailable
-    try {
-      const users = JSON.parse(localStorage.getItem('ds_users') || '{}');
-      users[username.toLowerCase()] = { username, passwordHash, createdAt: Date.now() };
-      localStorage.setItem('ds_users', JSON.stringify(users));
-      return true;
-    } catch(e2) { return false; }
+  } catch {
+    const u = JSON.parse(localStorage.getItem('ds_users') || '{}');
+    u[username.toLowerCase()] = { username, passwordHash };
+    localStorage.setItem('ds_users', JSON.stringify(u));
+    return true;
   }
 }
 
 async function getUser(username) {
-  const key = 'users:' + username.toLowerCase();
   try {
-    const result = await window.storage.get(key);
-    return result ? JSON.parse(result.value) : null;
-  } catch(e) {
-    // Fallback to localStorage
-    try {
-      const users = JSON.parse(localStorage.getItem('ds_users') || '{}');
-      return users[username.toLowerCase()] || null;
-    } catch(e2) { return null; }
+    const r = await window.storage.get('users:' + username.toLowerCase());
+    return r ? JSON.parse(r.value) : null;
+  } catch {
+    const u = JSON.parse(localStorage.getItem('ds_users') || '{}');
+    return u[username.toLowerCase()] || null;
   }
 }
 
-function saveSession(username) {
-  sessionStorage.setItem('ds_session', username);
+function saveSession(u) { sessionStorage.setItem('ds_sess', u); }
+function getSession()    { return sessionStorage.getItem('ds_sess'); }
+function clearSession()  { sessionStorage.removeItem('ds_sess'); }
+function currentUser()   { return getSession(); }
+
+/* ═══════════════════════════════════════════════════
+   IMAGE HELPER
+═══════════════════════════════════════════════════ */
+function getProductImage(product_id, name) {
+  return PRODUCT_IMAGES[product_id] || getFallbackSVG(name);
 }
 
-function getSession() {
-  return sessionStorage.getItem('ds_session');
+function getFallbackSVG(name) {
+  const letter = name.charAt(0).toUpperCase();
+  const palette = ['#e8ff00','#00e676','#ff6d00','#00b0ff','#e040fb','#ff4081','#40c4ff','#69f0ae'];
+  const col = palette[name.charCodeAt(0) % palette.length];
+  const svgStr = `<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+    <rect width="400" height="300" fill="#141414"/>
+    <rect x="140" y="80" width="120" height="120" rx="12" fill="${col}15" stroke="${col}33" stroke-width="1"/>
+    <text x="200" y="162" text-anchor="middle" font-family="sans-serif" font-size="72" font-weight="bold" fill="${col}" opacity="0.6">${letter}</text>
+    <text x="200" y="236" text-anchor="middle" font-family="monospace" font-size="11" fill="#444" letter-spacing="3">${name.toUpperCase().slice(0,16)}</text>
+  </svg>`;
+  return 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgStr)));
 }
 
-function clearSession() {
-  sessionStorage.removeItem('ds_session');
-}
+/* ═══════════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════════ */
+let allProducts    = [];
+let localCart      = [];
+let productsLoaded = false;
 
-/* ─────────────────────────────────────────────────────────
-   UI HELPERS
-───────────────────────────────────────────────────────── */
-let allProducts = [];
-let localCart   = [];
+// Cache: { [product_id]: { reviews: [], loaded: bool, userHasReviewed: bool } }
+const reviewCache = {};
 
+/* ═══════════════════════════════════════════════════
+   TOAST
+═══════════════════════════════════════════════════ */
 function showToast(msg, type = '') {
   const c = document.getElementById('toast-container');
   const t = document.createElement('div');
@@ -424,123 +536,78 @@ function showToast(msg, type = '') {
   setTimeout(() => t.remove(), 3000);
 }
 
+/* ═══════════════════════════════════════════════════
+   AUTH UI
+═══════════════════════════════════════════════════ */
 function switchTab(tab) {
-  ['login', 'signup'].forEach(t => {
+  ['login','signup'].forEach(t => {
     document.getElementById('tab-' + t).classList.toggle('active', t === tab);
     document.getElementById('panel-' + t).classList.toggle('active', t === tab);
   });
-  document.getElementById('login-error').textContent = '';
-  document.getElementById('signup-error').textContent = '';
-  document.getElementById('signup-success').textContent = '';
+  ['login-error','signup-error','signup-success'].forEach(id => { document.getElementById(id).textContent = ''; });
 }
 
-function togglePw(inputId, btn) {
-  const input = document.getElementById(inputId);
-  if (input.type === 'password') {
-    input.type = 'text';
-    btn.textContent = 'hide';
-  } else {
-    input.type = 'password';
-    btn.textContent = 'show';
-  }
+function togglePw(id, btn) {
+  const el = document.getElementById(id);
+  el.type = el.type === 'password' ? 'text' : 'password';
+  btn.textContent = el.type === 'password' ? 'show' : 'hide';
 }
 
 function shakeInput(id) {
   const el = document.getElementById(id);
   el.classList.remove('shake');
-  void el.offsetWidth; // reflow
+  void el.offsetWidth;
   el.classList.add('shake');
   setTimeout(() => el.classList.remove('shake'), 400);
   el.focus();
 }
 
 function checkUsernameInput(el) {
-  const val = el.value.trim();
-  el.classList.remove('ok', 'shake');
-  if (val.length >= 3 && /^[a-zA-Z0-9_\-]+$/.test(val)) {
-    el.classList.add('ok');
-  }
+  const v = el.value.trim();
+  el.classList.toggle('ok', v.length >= 3 && /^[a-zA-Z0-9_\-]+$/.test(v));
 }
 
-function checkPasswordStrength(pw) {
+function checkPwStrength(pw) {
   const bar = document.getElementById('pw-bar');
-  let score = 0;
-  if (pw.length >= 6) score++;
-  if (pw.length >= 10) score++;
-  if (/[A-Z]/.test(pw)) score++;
-  if (/[0-9]/.test(pw)) score++;
-  if (/[^a-zA-Z0-9]/.test(pw)) score++;
-  const pct = (score / 5) * 100;
-  const colors = ['', '#ff1744', '#ff6d00', '#ffd600', '#00e676', '#00e676'];
-  bar.style.width  = pct + '%';
-  bar.style.background = colors[score] || '#333';
+  let s = 0;
+  if (pw.length >= 6) s++;
+  if (pw.length >= 10) s++;
+  if (/[A-Z]/.test(pw)) s++;
+  if (/[0-9]/.test(pw)) s++;
+  if (/[^a-zA-Z0-9]/.test(pw)) s++;
+  bar.style.width = (s / 5 * 100) + '%';
+  bar.style.background = ['','#ff1744','#ff6d00','#ffd600','#00e676','#00e676'][s];
 }
 
-/* ─────────────────────────────────────────────────────────
+/* ═══════════════════════════════════════════════════
    AUTH LOGIC
-───────────────────────────────────────────────────────── */
+═══════════════════════════════════════════════════ */
 async function handleSignup() {
-  const username  = document.getElementById('signup-user').value.trim();
-  const password  = document.getElementById('signup-pass').value;
-  const confirm   = document.getElementById('signup-confirm').value;
-  const errEl     = document.getElementById('signup-error');
-  const successEl = document.getElementById('signup-success');
-  const btn       = document.getElementById('signup-btn');
+  const username = document.getElementById('signup-user').value.trim();
+  const password = document.getElementById('signup-pass').value;
+  const confirm  = document.getElementById('signup-confirm').value;
+  const errEl    = document.getElementById('signup-error');
+  const okEl     = document.getElementById('signup-success');
+  const btn      = document.getElementById('signup-btn');
 
-  errEl.textContent     = '';
-  successEl.textContent = '';
+  errEl.textContent = ''; okEl.textContent = '';
 
-  // Validate username
-  if (!username || username.length < 3) {
-    errEl.textContent = '⚠ Username must be at least 3 characters';
-    shakeInput('signup-user'); return;
-  }
-  if (!/^[a-zA-Z0-9_\-]+$/.test(username)) {
-    errEl.textContent = '⚠ Only letters, numbers, _ and - allowed';
-    shakeInput('signup-user'); return;
-  }
+  if (!username || username.length < 3) { errEl.textContent = '⚠ Username must be 3+ characters'; shakeInput('signup-user'); return; }
+  if (!/^[a-zA-Z0-9_\-]+$/.test(username)) { errEl.textContent = '⚠ Only letters, numbers, _ and - allowed'; shakeInput('signup-user'); return; }
+  if (!password || password.length < 6) { errEl.textContent = '⚠ Password must be 6+ characters'; shakeInput('signup-pass'); return; }
+  if (password !== confirm) { errEl.textContent = '⚠ Passwords do not match'; shakeInput('signup-confirm'); return; }
 
-  // Validate password
-  if (!password || password.length < 6) {
-    errEl.textContent = '⚠ Password must be at least 6 characters';
-    shakeInput('signup-pass'); return;
-  }
-  if (password !== confirm) {
-    errEl.textContent = '⚠ Passwords do not match';
-    shakeInput('signup-confirm'); return;
-  }
+  btn.disabled = true; btn.textContent = 'Checking...';
 
-  btn.disabled = true;
-  btn.textContent = 'Creating...';
-
-  // Check if username taken
   const existing = await getUser(username);
-  if (existing) {
-    errEl.textContent = '⚠ Username already taken — choose another';
-    shakeInput('signup-user');
-    btn.disabled = false;
-    btn.textContent = 'Create Account →';
-    return;
-  }
+  if (existing) { errEl.textContent = '⚠ Username already taken'; shakeInput('signup-user'); btn.disabled = false; btn.textContent = 'Create Account →'; return; }
 
   const hash = await hashPassword(password);
-  const saved = await saveUser(username, hash);
+  await saveUser(username, hash);
 
-  if (!saved) {
-    errEl.textContent = '⚠ Could not create account — storage error';
-    btn.disabled = false;
-    btn.textContent = 'Create Account →';
-    return;
-  }
-
-  successEl.textContent = '✓ Account created! Signing you in...';
-  btn.textContent = 'Create Account →';
-  btn.disabled = false;
-
-  setTimeout(() => {
-    saveSession(username);
-    startApp(username);
-  }, 900);
+  okEl.textContent = '✓ Account created! Signing you in...';
+  btn.disabled = false; btn.textContent = 'Create Account →';
+  setTimeout(() => { saveSession(username); startApp(username); }, 900);
 }
 
 async function handleLogin() {
@@ -551,49 +618,26 @@ async function handleLogin() {
 
   errEl.textContent = '';
 
-  if (!username) {
-    errEl.textContent = '⚠ Enter your username';
-    shakeInput('login-user'); return;
-  }
-  if (!password) {
-    errEl.textContent = '⚠ Enter your password';
-    shakeInput('login-pass'); return;
-  }
+  if (!username) { errEl.textContent = '⚠ Enter your username'; shakeInput('login-user'); return; }
+  if (!password) { errEl.textContent = '⚠ Enter your password'; shakeInput('login-pass'); return; }
 
-  btn.disabled = true;
-  btn.textContent = 'Checking...';
+  btn.disabled = true; btn.textContent = 'Checking...';
 
   const user = await getUser(username);
-
-  if (!user) {
-    errEl.textContent = '⚠ No account found — please sign up first';
-    shakeInput('login-user');
-    btn.disabled = false;
-    btn.textContent = 'Sign In →';
-    return;
-  }
+  if (!user) { errEl.textContent = '⚠ No account found — sign up first'; shakeInput('login-user'); btn.disabled = false; btn.textContent = 'Sign In →'; return; }
 
   const hash = await hashPassword(password);
+  if (hash !== user.passwordHash) { errEl.textContent = '⚠ Incorrect password'; shakeInput('login-pass'); btn.disabled = false; btn.textContent = 'Sign In →'; return; }
 
-  if (hash !== user.passwordHash) {
-    errEl.textContent = '⚠ Incorrect password';
-    shakeInput('login-pass');
-    btn.disabled = false;
-    btn.textContent = 'Sign In →';
-    return;
-  }
-
-  btn.disabled = false;
-  btn.textContent = 'Sign In →';
-
+  btn.disabled = false; btn.textContent = 'Sign In →';
   saveSession(user.username);
   startApp(user.username);
 }
 
 function handleLogout() {
   clearSession();
-  allProducts = [];
-  localCart   = [];
+  allProducts = []; localCart = []; productsLoaded = false;
+  Object.keys(reviewCache).forEach(k => delete reviewCache[k]);
   document.getElementById('cart-count').textContent = '0';
   document.getElementById('app').style.display = 'none';
   document.getElementById('auth-screen').style.display = 'flex';
@@ -601,7 +645,7 @@ function handleLogout() {
   document.getElementById('login-pass').value = '';
   document.getElementById('login-error').textContent = '';
   switchTab('login');
-  showToast('Signed out', '');
+  showToast('Signed out');
 }
 
 function startApp(username) {
@@ -613,9 +657,9 @@ function startApp(username) {
   showPage('products', document.getElementById('nav-products'));
 }
 
-/* ─────────────────────────────────────────────────────────
+/* ═══════════════════════════════════════════════════
    NAV
-───────────────────────────────────────────────────────── */
+═══════════════════════════════════════════════════ */
 function showPage(name, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -626,96 +670,322 @@ function showPage(name, btn) {
   if (name === 'orders')   loadOrders();
 }
 
-/* ─────────────────────────────────────────────────────────
+/* ═══════════════════════════════════════════════════
    PRODUCTS
-───────────────────────────────────────────────────────── */
+═══════════════════════════════════════════════════ */
 async function loadProducts() {
   const container = document.getElementById('products-container');
-  if (allProducts.length) { renderProducts(); return; }
+  if (productsLoaded && allProducts.length) { filterProducts(); return; }
+
   container.innerHTML = '<div class="loading"><div class="spinner"></div> Fetching products...</div>';
   try {
     const res = await fetch(API + '/products');
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const raw = await res.text();
     let data;
-    try { data = JSON.parse(raw); } catch(e) { throw new Error('Invalid JSON'); }
+    try { data = JSON.parse(raw); } catch { throw new Error('Invalid JSON'); }
 
     if (Array.isArray(data)) allProducts = data;
     else if (data.body) {
-      const parsed = typeof data.body === 'string' ? JSON.parse(data.body) : data.body;
-      allProducts = Array.isArray(parsed) ? parsed : parsed.Items || [];
+      const p = typeof data.body === 'string' ? JSON.parse(data.body) : data.body;
+      allProducts = Array.isArray(p) ? p : p.Items || [];
     } else if (data.Items) allProducts = data.Items;
-    else {
-      const arrVal = Object.values(data).find(v => Array.isArray(v));
-      allProducts = arrVal || [];
-    }
+    else { const arr = Object.values(data).find(v => Array.isArray(v)); allProducts = arr || []; }
 
     if (!allProducts.length) {
       container.innerHTML = `<div class="empty-state"><div class="empty-icon">📦</div><div class="empty-text">No Products Found</div></div>`;
       return;
     }
-    renderProducts();
+
+    allProducts.sort((a, b) => Number(a.product_id) - Number(b.product_id));
+    productsLoaded = true;
+    filterProducts();
+
   } catch(e) {
     container.innerHTML = `
       <div class="empty-state">
         <div class="empty-icon">🔌</div>
         <div class="empty-text">Network Error</div>
-        <div class="empty-sub" style="margin-top:0.5rem;font-size:0.7rem;">${e.message}</div>
-        <button onclick="loadProducts()" style="margin-top:1.5rem;background:none;border:1px solid var(--border);color:var(--text);font-family:'DM Mono',monospace;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;padding:0.6rem 1.25rem;cursor:pointer;">↺ Retry</button>
+        <div class="empty-sub" style="margin-top:.5rem;font-size:.7rem;">${e.message}</div>
+        <button onclick="productsLoaded=false;loadProducts()" style="margin-top:1.5rem;background:none;border:1px solid var(--border);color:var(--text);font-family:'DM Mono',monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;padding:.6rem 1.25rem;cursor:pointer;">↺ Retry</button>
       </div>`;
   }
 }
 
-function renderProducts() {
-  document.getElementById('product-count').textContent = `— ${allProducts.length} items`;
+function getSortedFiltered() {
+  const q    = (document.getElementById('search-input')?.value || '').toLowerCase();
+  const sort = document.getElementById('sort-select')?.value || 'id-asc';
+  let list = allProducts.filter(p => !q || p.name.toLowerCase().includes(q));
+  if      (sort === 'id-asc')    list.sort((a,b) => Number(a.product_id) - Number(b.product_id));
+  else if (sort === 'id-desc')   list.sort((a,b) => Number(b.product_id) - Number(a.product_id));
+  else if (sort === 'price-asc') list.sort((a,b) => Number(a.price) - Number(b.price));
+  else if (sort === 'price-desc')list.sort((a,b) => Number(b.price) - Number(a.price));
+  else if (sort === 'name-asc')  list.sort((a,b) => a.name.localeCompare(b.name));
+  return list;
+}
+
+/* render stars string */
+function starsStr(rating, filled = '★', empty = '☆') {
+  return filled.repeat(rating) + empty.repeat(5 - rating);
+}
+
+/* compute avg rating label */
+function avgLabel(reviews) {
+  if (!reviews || !reviews.length) return null;
+  const avg = reviews.reduce((s, r) => s + r.rating, 0) / reviews.length;
+  return { avg: avg.toFixed(1), count: reviews.length };
+}
+
+function filterProducts() {
+  const list = getSortedFiltered();
+  document.getElementById('product-count').textContent = `— ${list.length} of ${allProducts.length} items`;
+
+  if (!list.length) {
+    document.getElementById('products-container').innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-text">No Results</div><div class="empty-sub">Try a different search</div></div>`;
+    return;
+  }
+
   document.getElementById('products-container').innerHTML =
     '<div class="products-grid">' +
-    allProducts.map(p => `
-      <div class="product-card">
-        <div class="product-id">SKU #${String(p.product_id).padStart(3, '0')}</div>
-        <div class="product-name">${p.name}</div>
-        <div class="product-price"><span class="currency">₹ </span>${Number(p.price).toLocaleString('en-IN')}</div>
-        <button class="add-to-cart-btn" onclick="addToCart(${p.product_id})">+ Add to Cart</button>
-      </div>`).join('') + '</div>';
+    list.map(p => {
+      const imgUrl = getProductImage(p.product_id, p.name);
+      const cached = reviewCache[p.product_id];
+      const avg    = cached ? avgLabel(cached.reviews) : null;
+      const avgHtml = avg
+        ? `<div class="product-avg-stars"><span class="stars-display">${starsStr(Math.round(avg.avg))}</span><span class="review-count">${avg.avg} (${avg.count})</span></div>`
+        : `<div class="product-avg-stars"><span class="review-count">No reviews yet</span></div>`;
+
+      return `
+      <div class="product-card" id="card-${p.product_id}">
+        <div class="product-img-wrap">
+          <img src="${imgUrl}" alt="${p.name}" onerror="this.src='${getFallbackSVG(p.name)}'">
+        </div>
+        <div class="product-info">
+          <div class="product-meta">
+            <div class="product-id">SKU #${String(p.product_id).padStart(3,'0')}</div>
+          </div>
+          <div class="product-name">${p.name}</div>
+          ${avgHtml}
+          <div class="product-price"><span class="currency">₹ </span>${Number(p.price).toLocaleString('en-IN')}</div>
+          <button class="add-to-cart-btn" id="atc-${p.product_id}" onclick="addToCart(${p.product_id}, this)">+ Add to Cart</button>
+        </div>
+        <button class="reviews-toggle-btn" id="rtoggle-${p.product_id}" onclick="toggleReviews(${p.product_id})">
+          <span>Reviews</span><span class="chevron">▼</span>
+        </button>
+        <div class="reviews-panel" id="rpanel-${p.product_id}"></div>
+      </div>`;
+    }).join('') + '</div>';
 }
 
-/* ─────────────────────────────────────────────────────────
-   CART  — uses logged-in username as user_id
-───────────────────────────────────────────────────────── */
-function getCurrentUser() {
-  return getSession();
+/* ═══════════════════════════════════════════════════
+   REVIEWS
+═══════════════════════════════════════════════════ */
+async function toggleReviews(product_id) {
+  const panel  = document.getElementById(`rpanel-${product_id}`);
+  const toggle = document.getElementById(`rtoggle-${product_id}`);
+  const isOpen = panel.classList.contains('open');
+
+  if (isOpen) {
+    panel.classList.remove('open');
+    toggle.classList.remove('open');
+    return;
+  }
+
+  panel.classList.add('open');
+  toggle.classList.add('open');
+
+  // If already loaded and cached, just re-render
+  if (reviewCache[product_id] && reviewCache[product_id].loaded) {
+    renderReviewPanel(product_id);
+    return;
+  }
+
+  // Fetch from API
+  panel.innerHTML = `<div class="reviews-loading"><div class="spinner"></div> Loading reviews...</div>`;
+  try {
+    const res  = await fetch(`${API}/reviews?product_id=${product_id}`);
+    const data = await res.json();
+    const reviews = Array.isArray(data) ? data : data.Items || [];
+    const userHasReviewed = reviews.some(r => r.user_id === currentUser());
+    reviewCache[product_id] = { reviews, loaded: true, userHasReviewed };
+    renderReviewPanel(product_id);
+    // Refresh avg stars on product card without full re-render
+    updateAvgStars(product_id);
+  } catch(e) {
+    panel.innerHTML = `<div class="reviews-empty" style="color:var(--danger);">Failed to load reviews</div>`;
+  }
 }
 
-async function addToCart(product_id) {
-  const userId = getCurrentUser();
+function updateAvgStars(product_id) {
+  const card = document.getElementById(`card-${product_id}`);
+  if (!card) return;
+  const avgWrap = card.querySelector('.product-avg-stars');
+  if (!avgWrap) return;
+  const cached = reviewCache[product_id];
+  const avg    = cached ? avgLabel(cached.reviews) : null;
+  avgWrap.innerHTML = avg
+    ? `<span class="stars-display">${starsStr(Math.round(avg.avg))}</span><span class="review-count">${avg.avg} (${avg.count})</span>`
+    : `<span class="review-count">No reviews yet</span>`;
+}
+
+function renderReviewPanel(product_id) {
+  const panel   = document.getElementById(`rpanel-${product_id}`);
+  const cached  = reviewCache[product_id] || { reviews: [], userHasReviewed: false };
+  const reviews = cached.reviews;
+
+  const reviewsHtml = reviews.length
+    ? `<div class="reviews-list">${reviews.map(r => `
+        <div class="review-item">
+          <div class="review-header">
+            <span class="review-user">${r.user_id}</span>
+            <span class="review-stars">${starsStr(r.rating)}</span>
+          </div>
+          <div class="review-text">${escapeHtml(r.review)}</div>
+        </div>`).join('')}</div>`
+    : `<div class="reviews-empty">No reviews yet — be the first!</div>`;
+
+  const formHtml = cached.userHasReviewed
+    ? `<div class="review-form-title">Your Review</div>
+       <div class="already-reviewed-note">✓ You have already reviewed this product</div>`
+    : `<div class="review-form-title">Write a <span>Review</span></div>
+       <div class="star-picker" id="stars-${product_id}">
+         ${[1,2,3,4,5].map(n => `<button class="star-btn" data-val="${n}" onclick="pickStar(${product_id},${n})">★</button>`).join('')}
+       </div>
+       <textarea class="review-textarea" id="rtext-${product_id}" placeholder="Share your thoughts about this product..." rows="3"></textarea>
+       <button class="submit-review-btn" id="rsubmit-${product_id}" onclick="submitReview(${product_id})">Submit Review →</button>
+       <div class="review-form-msg" id="rmsg-${product_id}"></div>`;
+
+  panel.innerHTML = reviewsHtml + formHtml;
+
+  // Set star picker state from any previous selection
+  if (reviewCache[product_id] && reviewCache[product_id].selectedRating) {
+    highlightStars(product_id, reviewCache[product_id].selectedRating);
+  }
+}
+
+function pickStar(product_id, val) {
+  if (!reviewCache[product_id]) reviewCache[product_id] = { reviews: [], loaded: true, userHasReviewed: false };
+  reviewCache[product_id].selectedRating = val;
+  highlightStars(product_id, val);
+}
+
+function highlightStars(product_id, val) {
+  const picker = document.getElementById(`stars-${product_id}`);
+  if (!picker) return;
+  picker.querySelectorAll('.star-btn').forEach(btn => {
+    btn.classList.toggle('active', Number(btn.dataset.val) <= val);
+  });
+}
+
+async function submitReview(product_id) {
+  const rating  = reviewCache[product_id]?.selectedRating;
+  const textEl  = document.getElementById(`rtext-${product_id}`);
+  const msgEl   = document.getElementById(`rmsg-${product_id}`);
+  const btn     = document.getElementById(`rsubmit-${product_id}`);
+  const review  = textEl ? textEl.value.trim() : '';
+
+  msgEl.className = 'review-form-msg';
+  msgEl.textContent = '';
+
+  if (!rating) {
+    msgEl.className = 'review-form-msg error';
+    msgEl.textContent = '⚠ Please select a star rating';
+    return;
+  }
+  if (!review || review.length < 5) {
+    msgEl.className = 'review-form-msg error';
+    msgEl.textContent = '⚠ Review must be at least 5 characters';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+
+  try {
+    const res  = await fetch(`${API}/reviews`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        product_id: Number(product_id),
+        user_id:    currentUser(),
+        rating:     Number(rating),
+        review
+      })
+    });
+    const data = await res.json();
+
+    if (!res.ok) {
+      msgEl.className = 'review-form-msg error';
+      msgEl.textContent = '⚠ ' + (data.error || 'Submission failed');
+      btn.disabled = false;
+      btn.textContent = 'Submit Review →';
+      return;
+    }
+
+    // Update cache optimistically
+    reviewCache[product_id].reviews.push({
+      product_id: Number(product_id),
+      user_id:    currentUser(),
+      rating:     Number(rating),
+      review
+    });
+    reviewCache[product_id].userHasReviewed = true;
+    delete reviewCache[product_id].selectedRating;
+
+    showToast('Review submitted! ✓', 'success');
+    renderReviewPanel(product_id);
+    updateAvgStars(product_id);
+
+  } catch(e) {
+    // Distinguish CORS/network errors from other failures
+    const isCors = e instanceof TypeError && e.message.toLowerCase().includes('fetch');
+    msgEl.className = 'review-form-msg error';
+    msgEl.textContent = isCors
+      ? '⚠ CORS error — enable CORS on /reviews in API Gateway, then redeploy'
+      : '⚠ ' + (e.message || 'Network error — try again');
+    btn.disabled = false;
+    btn.textContent = 'Submit Review →';
+    console.error('[submitReview] Error:', e);
+  }
+}
+
+function escapeHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ═══════════════════════════════════════════════════
+   CART
+═══════════════════════════════════════════════════ */
+async function addToCart(product_id, btn) {
+  if (btn) { btn.textContent = 'Adding...'; btn.disabled = true; }
   try {
     await fetch(API + '/cart', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ user_id: userId, product_id, quantity: 1 })
+      body: JSON.stringify({ user_id: currentUser(), product_id, quantity: 1 })
     });
-    showToast('Added to cart', 'success');
+    showToast('Added to cart ✓', 'success');
+    if (btn) { btn.textContent = '✓ Added'; btn.classList.add('added'); setTimeout(() => { btn.textContent = '+ Add to Cart'; btn.classList.remove('added'); btn.disabled = false; }, 1500); }
     loadCart();
-  } catch(e) {
+  } catch {
     showToast('Failed to add item', 'error');
+    if (btn) { btn.textContent = '+ Add to Cart'; btn.disabled = false; }
   }
 }
 
 async function loadCart() {
-  const userId = getCurrentUser();
+  const userId = currentUser();
   try {
     const res  = await fetch(API + `/cart?user_id=${userId}`);
     const data = await res.json();
     const items = Array.isArray(data) ? data : data.Items || [];
     localCart = items.map(c => {
-      const product = allProducts.find(p => p.product_id == c.product_id);
-      return { ...c, name: product ? product.name : 'Unknown', price: product ? Number(product.price) : 0 };
+      const p = allProducts.find(x => x.product_id == c.product_id);
+      return { ...c, name: p ? p.name : 'Unknown', price: p ? Number(p.price) : 0 };
     });
     renderCart();
     updateCartCount();
-  } catch(e) {
-    console.error('Cart load error:', e);
-  }
+  } catch(e) { console.error('Cart error', e); }
 }
 
 function updateCartCount() {
@@ -724,97 +994,97 @@ function updateCartCount() {
 
 function renderCart() {
   const container = document.getElementById('cart-items-container');
+
   if (!localCart.length) {
-    container.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-icon">🛒</div>
-        <div class="empty-text">Cart is Empty</div>
-        <div class="empty-sub">Add products to get started</div>
-      </div>`;
+    container.innerHTML = `<div class="empty-state"><div class="empty-icon">🛒</div><div class="empty-text">Cart is Empty</div><div class="empty-sub">Browse products and add items</div></div>`;
     document.getElementById('checkout-btn').disabled = true;
-    document.getElementById('summary-items').textContent    = '0';
-    document.getElementById('summary-subtotal').textContent = '₹0';
-    document.getElementById('summary-total').textContent    = '₹0';
+    ['summary-items','summary-subtotal','summary-total'].forEach((id,i) => { document.getElementById(id).textContent = i ? '₹0' : '0'; });
     return;
   }
-  let total = 0, totalItems = 0;
-  container.innerHTML = localCart.map(item => {
-    const itemTotal = item.price * item.quantity;
-    total += itemTotal; totalItems += item.quantity;
+
+  let total = 0, totalQty = 0;
+  const rows = localCart.map(item => {
+    const sub = item.price * item.quantity;
+    total += sub; totalQty += item.quantity;
+    const imgUrl = getProductImage(item.product_id, item.name);
     return `
       <div class="cart-item">
-        <input type="checkbox" class="select-item" data-id="${item.product_id}" checked>
+        <div class="cart-item-thumb">
+          <img src="${imgUrl}" alt="${item.name}" onerror="this.parentElement.innerHTML='<div class=cart-item-thumb-placeholder>📦</div>'">
+        </div>
         <div class="cart-item-name">${item.name}</div>
         <div class="cart-item-qty">
-          <button class="qty-btn" onclick="changeQty(${item.product_id}, -1)">−</button>
+          <button class="qty-btn" onclick="changeQty(${item.product_id},-1)">−</button>
           <span>${item.quantity}</span>
-          <button class="qty-btn" onclick="changeQty(${item.product_id}, 1)">+</button>
+          <button class="qty-btn" onclick="changeQty(${item.product_id},1)">+</button>
         </div>
-        <div class="cart-item-price">₹${itemTotal.toLocaleString('en-IN')}</div>
-        <button class="remove-btn" onclick="removeItem(${item.product_id})">×</button>
+        <div class="cart-item-price">₹${sub.toLocaleString('en-IN')}</div>
+        <button class="remove-btn" onclick="removeItem(${item.product_id})" title="Remove">×</button>
       </div>`;
-  }).join('');
-  document.getElementById('summary-items').textContent    = totalItems;
+  });
+
+  container.innerHTML = `<div class="cart-items-wrapper">${rows.join('')}</div>`;
+  document.getElementById('summary-items').textContent    = totalQty;
   document.getElementById('summary-subtotal').textContent = '₹' + total.toLocaleString('en-IN');
   document.getElementById('summary-total').textContent    = '₹' + total.toLocaleString('en-IN');
-  document.getElementById('checkout-btn').disabled = total === 0;
+  document.getElementById('checkout-btn').disabled        = total === 0;
 }
 
 async function changeQty(product_id, delta) {
-  const userId = getCurrentUser();
-  const item   = localCart.find(i => i.product_id == product_id);
+  const item = localCart.find(i => i.product_id == product_id);
   if (!item) return;
-  if (delta === -1 && item.quantity <= 1) { await removeItem(product_id); return; }
-  await fetch(API + '/cart', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ user_id: userId, product_id, quantity: delta })
-  });
-  loadCart();
+  if (delta === -1 && item.quantity <= 1) { removeItem(product_id); return; }
+  item.quantity += delta;
+  renderCart();
+  updateCartCount();
+  try {
+    await fetch(API + '/cart', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user_id: currentUser(), product_id, quantity: delta })
+    });
+  } catch { showToast('Sync error', 'error'); }
 }
 
 async function removeItem(product_id) {
-  const userId = getCurrentUser();
-  await fetch(API + '/cart', {
-    method: 'DELETE',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ user_id: userId, product_id })
-  });
-  showToast('Item removed', '');
-  loadCart();
+  localCart = localCart.filter(i => i.product_id != product_id);
+  renderCart();
+  updateCartCount();
+  showToast('Item removed');
+  try {
+    await fetch(API + '/cart', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user_id: currentUser(), product_id })
+    });
+  } catch { showToast('Sync error — refresh if needed', 'error'); }
 }
 
-/* ─────────────────────────────────────────────────────────
+/* ═══════════════════════════════════════════════════
    ORDERS
-───────────────────────────────────────────────────────── */
+═══════════════════════════════════════════════════ */
 async function loadOrders() {
   const container = document.getElementById('orders-container');
-  container.innerHTML = '<div class="loading"><div class="spinner"></div> Fetching orders...</div>';
+  container.innerHTML = '<div class="loading"><div class="spinner"></div> Loading orders...</div>';
   try {
-    const userId = getCurrentUser();
-    const res    = await fetch(API + `/orders?user_id=${userId}`);
-    const data   = await res.json();
+    const res  = await fetch(API + `/orders?user_id=${currentUser()}`);
+    const data = await res.json();
     renderOrders(Array.isArray(data) ? data : data.Items || []);
-  } catch(e) {
-    container.innerHTML = '<div class="empty-state"><div class="empty-icon">❌</div><div class="empty-text">Failed to load orders</div></div>';
-  }
+  } catch { container.innerHTML = '<div class="empty-state"><div class="empty-icon">❌</div><div class="empty-text">Failed to load orders</div></div>'; }
 }
 
 function renderOrders(orders) {
   const container = document.getElementById('orders-container');
   if (!orders.length) {
-    container.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-icon">📋</div>
-        <div class="empty-text">No Orders Yet</div>
-        <div class="empty-sub">Place your first order from the cart</div>
-      </div>`;
+    container.innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">No Orders Yet</div><div class="empty-sub">Place your first order from the cart</div></div>`;
+    document.getElementById('order-count').textContent = '';
     return;
   }
+  const sorted = [...orders].reverse();
   document.getElementById('order-count').textContent = `— ${orders.length} orders`;
   container.innerHTML =
     '<div class="orders-list">' +
-    orders.map(o => `
+    sorted.map(o => `
       <div class="order-card">
         <div class="order-header">
           <div class="order-id-text">Order ID: ${o.order_id}</div>
@@ -822,59 +1092,47 @@ function renderOrders(orders) {
           <div class="order-total">₹${Number(o.total).toLocaleString('en-IN')}</div>
         </div>
         <div class="order-items-tags">
-          ${o.items.map(i => `<div class="order-item-tag">${i.name} × ${i.quantity}</div>`).join('')}
+          ${(o.items || []).map(i => `<div class="order-item-tag">${i.name} × ${i.quantity}</div>`).join('')}
         </div>
-        <div class="order-id-text">User: ${o.user_id}</div>
-      </div>`).join('') +
-    '</div>';
+        <div class="order-id-text" style="color:var(--accent);font-size:0.65rem;">Account: ${o.user_id}</div>
+      </div>`).join('') + '</div>';
 }
 
-/* ─────────────────────────────────────────────────────────
-   PLACE ORDER
-───────────────────────────────────────────────────────── */
 async function placeOrder() {
-  const userId = getCurrentUser();
-  const selectedItems = localCart.filter(item => {
-    const cb = document.querySelector(`input[data-id='${item.product_id}']`);
-    return cb && cb.checked;
-  });
-  if (!selectedItems.length) { showToast('Select items to order', 'error'); return; }
-
+  if (!localCart.length) { showToast('Cart is empty', 'error'); return; }
   const orderData = {
-    user_id: userId,
-    items:   selectedItems,
-    total:   selectedItems.reduce((sum, i) => sum + (i.price * i.quantity), 0)
+    user_id: currentUser(),
+    items:   localCart,
+    total:   localCart.reduce((s, i) => s + i.price * i.quantity, 0)
   };
-
   try {
+    document.getElementById('checkout-btn').disabled = true;
+    document.getElementById('checkout-btn').textContent = 'Placing...';
     await fetch(API + '/orders', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(orderData)
     });
-    for (let item of selectedItems) {
+    for (const item of localCart) {
       await fetch(API + '/cart', {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user_id: userId, product_id: item.product_id })
+        body: JSON.stringify({ user_id: currentUser(), product_id: item.product_id })
       });
     }
-    showToast('Order placed!', 'success');
+    showToast('Order placed! 🎉', 'success');
     loadCart();
     showPage('orders', document.getElementById('nav-orders'));
-  } catch(err) {
-    showToast('Order failed', 'error');
-  }
+  } catch { showToast('Order failed', 'error'); }
+  finally { document.getElementById('checkout-btn').textContent = 'Place Order'; }
 }
 
-/* ─────────────────────────────────────────────────────────
-   INIT — check for existing session
-───────────────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════ */
 (function init() {
-  const session = getSession();
-  if (session) {
-    startApp(session);
-  }
+  const sess = getSession();
+  if (sess) startApp(sess);
 })();
 </script>
 </body>
