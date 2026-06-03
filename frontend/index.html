@@ -22,39 +22,6 @@
   body { background: var(--bg); color: var(--text); font-family: 'DM Mono', monospace; min-height: 100vh; overflow-x: hidden; }
   body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events: none; z-index: 1000; opacity: 0.4; }
 
-  /* ── AUTH ── */
-  #auth-screen { position: fixed; inset: 0; z-index: 999; display: flex; align-items: center; justify-content: center; background: var(--bg); }
-  .auth-box { background: var(--card-bg); border: 1px solid var(--border); width: 100%; max-width: 380px; position: relative; overflow: hidden; }
-  .auth-box::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--accent); }
-  .auth-tabs { display: flex; border-bottom: 1px solid var(--border); }
-  .auth-tab { flex: 1; background: none; border: none; color: var(--muted); font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; padding: 1rem; cursor: pointer; transition: all 0.2s; border-bottom: 2px solid transparent; margin-bottom: -1px; }
-  .auth-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
-  .auth-tab:hover:not(.active) { color: var(--text); }
-  .auth-body { padding: 2rem; }
-  .auth-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.75rem; letter-spacing: -0.03em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.2rem; }
-  .auth-logo span { color: var(--text); }
-  .auth-tagline { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); margin-bottom: 1.75rem; }
-  .auth-panel { display: none; }
-  .auth-panel.active { display: block; }
-  .auth-label { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); display: block; margin-bottom: 0.4rem; }
-  .auth-input { width: 100%; background: var(--surface2); border: 1px solid var(--border); color: var(--text); font-family: 'DM Mono', monospace; font-size: 0.85rem; padding: 0.75rem 1rem; outline: none; transition: border-color 0.2s; margin-bottom: 1rem; }
-  .auth-input:focus { border-color: var(--accent); }
-  .auth-input.shake { animation: shake 0.35s ease; border-color: var(--danger); }
-  .auth-input.ok { border-color: var(--success); }
-  .pw-wrapper { position: relative; margin-bottom: 1rem; }
-  .pw-wrapper .auth-input { margin-bottom: 0; padding-right: 2.5rem; }
-  .pw-toggle { position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--muted); cursor: pointer; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; transition: color 0.2s; padding: 0; font-family: 'DM Mono', monospace; }
-  .pw-toggle:hover { color: var(--accent); }
-  .pw-strength { height: 3px; background: var(--border); margin-bottom: 1rem; border-radius: 2px; overflow: hidden; }
-  .pw-strength-bar { height: 100%; width: 0; transition: width 0.3s, background 0.3s; }
-  .auth-btn { width: 100%; background: var(--accent); color: #000; border: none; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.85rem; cursor: pointer; transition: all 0.2s; margin-top: 0.25rem; }
-  .auth-btn:hover { background: #fff; }
-  .auth-btn:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; }
-  .auth-error { font-size: 0.68rem; color: var(--danger); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.75rem; min-height: 1rem; }
-  .auth-success-msg { font-size: 0.68rem; color: var(--success); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.75rem; min-height: 1rem; }
-  .auth-hint { font-size: 0.6rem; color: var(--muted); margin-top: 1.25rem; line-height: 1.7; border-top: 1px solid var(--border); padding-top: 1rem; }
-  @keyframes shake { 0%,100% { transform: translateX(0); } 20% { transform: translateX(-6px); } 60% { transform: translateX(6px); } }
-
   /* ── APP SHELL ── */
   #app { display: none; }
   header { position: sticky; top: 0; z-index: 100; background: rgba(10,10,10,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 2rem; height: 64px; display: flex; align-items: center; justify-content: space-between; }
@@ -292,66 +259,11 @@
     .cart-layout { grid-template-columns: 1fr; }
     .products-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
     .user-name { display: none; }
-    .auth-body { padding: 1.5rem; }
     .cart-item { flex-wrap: wrap; }
   }
 </style>
 </head>
 <body>
-
-<!-- AUTH SCREEN -->
-<div id="auth-screen">
-  <div class="auth-box">
-    <div class="auth-tabs">
-      <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Sign In</button>
-      <button class="auth-tab" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
-    </div>
-    <div class="auth-body">
-      <div class="auth-logo">Dee<span>Store</span></div>
-      <div class="auth-tagline">// Premium goods, secured access</div>
-
-      <div class="auth-panel active" id="panel-login">
-        <label class="auth-label">Username</label>
-        <input class="auth-input" type="text" id="login-user" placeholder="your_username" autocomplete="username"
-          onkeydown="if(event.key==='Enter')document.getElementById('login-pass').focus()">
-        <label class="auth-label">Password</label>
-        <div class="pw-wrapper">
-          <input class="auth-input" type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password"
-            onkeydown="if(event.key==='Enter')handleLogin()">
-          <button class="pw-toggle" onclick="togglePw('login-pass',this)">show</button>
-        </div>
-        <button class="auth-btn" id="login-btn" onclick="handleLogin()">Sign In →</button>
-        <div class="auth-error" id="login-error"></div>
-        <div class="auth-hint">No account? <span style="color:var(--accent);cursor:pointer" onclick="switchTab('signup')">Sign Up →</span></div>
-      </div>
-
-      <div class="auth-panel" id="panel-signup">
-        <label class="auth-label">Choose Username</label>
-        <input class="auth-input" type="text" id="signup-user" placeholder="e.g. john_doe" autocomplete="username"
-          oninput="checkUsernameInput(this)"
-          onkeydown="if(event.key==='Enter')document.getElementById('signup-pass').focus()">
-        <label class="auth-label">Password</label>
-        <div class="pw-wrapper">
-          <input class="auth-input" type="password" id="signup-pass" placeholder="Min 6 characters" autocomplete="new-password"
-            oninput="checkPwStrength(this.value)"
-            onkeydown="if(event.key==='Enter')document.getElementById('signup-confirm').focus()">
-          <button class="pw-toggle" onclick="togglePw('signup-pass',this)">show</button>
-        </div>
-        <div class="pw-strength"><div class="pw-strength-bar" id="pw-bar"></div></div>
-        <label class="auth-label">Confirm Password</label>
-        <div class="pw-wrapper">
-          <input class="auth-input" type="password" id="signup-confirm" placeholder="Repeat password" autocomplete="new-password"
-            onkeydown="if(event.key==='Enter')handleSignup()">
-          <button class="pw-toggle" onclick="togglePw('signup-confirm',this)">show</button>
-        </div>
-        <button class="auth-btn" id="signup-btn" onclick="handleSignup()">Create Account →</button>
-        <div class="auth-error" id="signup-error"></div>
-        <div class="auth-success-msg" id="signup-success"></div>
-        <div class="auth-hint">Have an account? <span style="color:var(--accent);cursor:pointer" onclick="switchTab('login')">Sign In →</span></div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- APP -->
 <div id="app">
@@ -433,9 +345,22 @@
 ═══════════════════════════════════════════════════ */
 const API = 'https://8h0awzpfti.execute-api.ap-southeast-1.amazonaws.com/v1';
 
+const COGNITO_DOMAIN =
+"https://ap-southeast-1joyo3q9c1.auth.ap-southeast-1.amazoncognito.com";
+
+const CLIENT_ID =
+"eu0pplrgkq7pfpkjnohab92od";
+
+const REDIRECT_URI =
+"https://dr6mr82mn4hj9.cloudfront.net";
+
+function currentUser() {
+   return sessionStorage.getItem("username") || "Guest";
+}
+
 /* ═══════════════════════════════════════════════════
    PRODUCT IMAGES
-═══════════════════════════════════════════════════ */
+═══════════════════════════════════════════════════════════ */
 function driveUrl(id) {
   return `https://lh3.googleusercontent.com/d/${id}=w1000`;
 }
@@ -455,44 +380,6 @@ const PRODUCT_IMAGES = {
   13: driveUrl('1TXOdp_98RNCb8fMXUKm5qOGySSZue1kX'),
   14: driveUrl('13NlxLkPgs82lSu0MecmXNohTFIho2pbI'),
 };
-
-/* ═══════════════════════════════════════════════════
-   PASSWORD HASHING
-═══════════════════════════════════════════════════ */
-async function hashPassword(pw) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('deestore_v2_' + pw));
-  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
-}
-
-/* ═══════════════════════════════════════════════════
-   USER STORAGE
-═══════════════════════════════════════════════════ */
-async function saveUser(username, passwordHash) {
-  try {
-    await window.storage.set('users:' + username.toLowerCase(), JSON.stringify({ username, passwordHash, createdAt: Date.now() }));
-    return true;
-  } catch {
-    const u = JSON.parse(localStorage.getItem('ds_users') || '{}');
-    u[username.toLowerCase()] = { username, passwordHash };
-    localStorage.setItem('ds_users', JSON.stringify(u));
-    return true;
-  }
-}
-
-async function getUser(username) {
-  try {
-    const r = await window.storage.get('users:' + username.toLowerCase());
-    return r ? JSON.parse(r.value) : null;
-  } catch {
-    const u = JSON.parse(localStorage.getItem('ds_users') || '{}');
-    return u[username.toLowerCase()] || null;
-  }
-}
-
-function saveSession(u) { sessionStorage.setItem('ds_sess', u); }
-function getSession()    { return sessionStorage.getItem('ds_sess'); }
-function clearSession()  { sessionStorage.removeItem('ds_sess'); }
-function currentUser()   { return getSession(); }
 
 /* ═══════════════════════════════════════════════════
    IMAGE HELPER
@@ -539,135 +426,78 @@ function showToast(msg, type = '') {
 /* ═══════════════════════════════════════════════════
    AUTH UI
 ═══════════════════════════════════════════════════ */
-function switchTab(tab) {
-  ['login','signup'].forEach(t => {
-    document.getElementById('tab-' + t).classList.toggle('active', t === tab);
-    document.getElementById('panel-' + t).classList.toggle('active', t === tab);
-  });
-  ['login-error','signup-error','signup-success'].forEach(id => { document.getElementById(id).textContent = ''; });
-}
-
-function togglePw(id, btn) {
-  const el = document.getElementById(id);
-  el.type = el.type === 'password' ? 'text' : 'password';
-  btn.textContent = el.type === 'password' ? 'show' : 'hide';
-}
-
-function shakeInput(id) {
-  const el = document.getElementById(id);
-  el.classList.remove('shake');
-  void el.offsetWidth;
-  el.classList.add('shake');
-  setTimeout(() => el.classList.remove('shake'), 400);
-  el.focus();
-}
-
-function checkUsernameInput(el) {
-  const v = el.value.trim();
-  el.classList.toggle('ok', v.length >= 3 && /^[a-zA-Z0-9_\-]+$/.test(v));
-}
-
-function checkPwStrength(pw) {
-  const bar = document.getElementById('pw-bar');
-  let s = 0;
-  if (pw.length >= 6) s++;
-  if (pw.length >= 10) s++;
-  if (/[A-Z]/.test(pw)) s++;
-  if (/[0-9]/.test(pw)) s++;
-  if (/[^a-zA-Z0-9]/.test(pw)) s++;
-  bar.style.width = (s / 5 * 100) + '%';
-  bar.style.background = ['','#ff1744','#ff6d00','#ffd600','#00e676','#00e676'][s];
-}
-
 /* ═══════════════════════════════════════════════════
    AUTH LOGIC
 ═══════════════════════════════════════════════════ */
-async function handleSignup() {
-  const username = document.getElementById('signup-user').value.trim();
-  const password = document.getElementById('signup-pass').value;
-  const confirm  = document.getElementById('signup-confirm').value;
-  const errEl    = document.getElementById('signup-error');
-  const okEl     = document.getElementById('signup-success');
-  const btn      = document.getElementById('signup-btn');
+function handleLogin() {
 
-  errEl.textContent = ''; okEl.textContent = '';
+  window.location.href =
+    `${COGNITO_DOMAIN}/login` +
+    `?client_id=${CLIENT_ID}` +
+    `&response_type=code` +
+    `&scope=email+openid+phone` +
+    `&redirect_uri=${encodeURIComponent(REDIRECT_URI)}`;
 
-  if (!username || username.length < 3) { errEl.textContent = '⚠ Username must be 3+ characters'; shakeInput('signup-user'); return; }
-  if (!/^[a-zA-Z0-9_\-]+$/.test(username)) { errEl.textContent = '⚠ Only letters, numbers, _ and - allowed'; shakeInput('signup-user'); return; }
-  if (!password || password.length < 6) { errEl.textContent = '⚠ Password must be 6+ characters'; shakeInput('signup-pass'); return; }
-  if (password !== confirm) { errEl.textContent = '⚠ Passwords do not match'; shakeInput('signup-confirm'); return; }
-
-  btn.disabled = true; btn.textContent = 'Checking...';
-
-  const existing = await getUser(username);
-  if (existing) { errEl.textContent = '⚠ Username already taken'; shakeInput('signup-user'); btn.disabled = false; btn.textContent = 'Create Account →'; return; }
-
-  const hash = await hashPassword(password);
-  await saveUser(username, hash);
-
-  okEl.textContent = '✓ Account created! Signing you in...';
-  btn.disabled = false; btn.textContent = 'Create Account →';
-  setTimeout(() => { saveSession(username); startApp(username); }, 900);
-}
-
-async function handleLogin() {
-  const username = document.getElementById('login-user').value.trim();
-  const password = document.getElementById('login-pass').value;
-  const errEl    = document.getElementById('login-error');
-  const btn      = document.getElementById('login-btn');
-
-  errEl.textContent = '';
-
-  if (!username) { errEl.textContent = '⚠ Enter your username'; shakeInput('login-user'); return; }
-  if (!password) { errEl.textContent = '⚠ Enter your password'; shakeInput('login-pass'); return; }
-
-  btn.disabled = true; btn.textContent = 'Checking...';
-
-  const user = await getUser(username);
-  if (!user) { errEl.textContent = '⚠ No account found — sign up first'; shakeInput('login-user'); btn.disabled = false; btn.textContent = 'Sign In →'; return; }
-
-  const hash = await hashPassword(password);
-  if (hash !== user.passwordHash) { errEl.textContent = '⚠ Incorrect password'; shakeInput('login-pass'); btn.disabled = false; btn.textContent = 'Sign In →'; return; }
-
-  btn.disabled = false; btn.textContent = 'Sign In →';
-  saveSession(user.username);
-  startApp(user.username);
 }
 
 function handleLogout() {
-  clearSession();
-  allProducts = []; localCart = []; productsLoaded = false;
-  Object.keys(reviewCache).forEach(k => delete reviewCache[k]);
-  document.getElementById('cart-count').textContent = '0';
-  document.getElementById('app').style.display = 'none';
-  document.getElementById('auth-screen').style.display = 'flex';
-  document.getElementById('login-user').value = '';
-  document.getElementById('login-pass').value = '';
-  document.getElementById('login-error').textContent = '';
-  switchTab('login');
-  showToast('Signed out');
+
+  sessionStorage.clear();
+
+  window.location.href =
+    `${COGNITO_DOMAIN}/logout` +
+    `?client_id=${CLIENT_ID}` +
+    `&logout_uri=${encodeURIComponent(REDIRECT_URI)}`;
+
 }
 
 function startApp(username) {
-  document.getElementById('user-avatar').textContent       = username.charAt(0).toUpperCase();
-  document.getElementById('user-name-display').textContent = username;
-  document.getElementById('summary-user').textContent      = username;
-  document.getElementById('auth-screen').style.display     = 'none';
-  document.getElementById('app').style.display             = 'block';
-  showPage('products', document.getElementById('nav-products'));
+  console.log("startApp executed");
+  
+  const userAvatar = document.getElementById('user-avatar');
+  const userNameDisplay = document.getElementById('user-name-display');
+  const summaryUser = document.getElementById('summary-user');
+  const appContainer = document.getElementById('app');
+  const navProducts = document.getElementById('nav-products');
+  
+  if (!userAvatar) console.error("user-avatar not found");
+  if (!userNameDisplay) console.error("user-name-display not found");
+  if (!summaryUser) console.error("summary-user not found");
+  if (!appContainer) console.error("app not found");
+  if (!navProducts) console.error("nav-products not found");
+  
+  if (userAvatar) userAvatar.textContent = username.charAt(0).toUpperCase();
+  if (userNameDisplay) userNameDisplay.textContent = username;
+  if (summaryUser) summaryUser.textContent = username;
+  if (appContainer) appContainer.style.display = 'block';
+  if (navProducts) showPage('products', navProducts);
 }
 
 /* ═══════════════════════════════════════════════════
    NAV
 ═══════════════════════════════════════════════════ */
 function showPage(name, btn) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('page-' + name).classList.add('active');
+
+  document.querySelectorAll('.page')
+    .forEach(p => p.classList.remove('active'));
+
+  document.querySelectorAll('.nav-btn')
+    .forEach(b => b.classList.remove('active'));
+
+  const page = document.getElementById('page-' + name);
+
+  if (!page) {
+    console.error('Missing page:', 'page-' + name);
+    return;
+  }
+
+  page.classList.add('active');
+
   if (btn) btn.classList.add('active');
+
   if (name === 'products') loadProducts();
-  if (name === 'cart')     loadCart();
-  if (name === 'orders')   loadOrders();
+  if (name === 'cart') loadCart();
+  if (name === 'orders') loadOrders();
 }
 
 /* ═══════════════════════════════════════════════════
@@ -1127,13 +957,103 @@ async function placeOrder() {
   finally { document.getElementById('checkout-btn').textContent = 'Place Order'; }
 }
 
-/* ═══════════════════════════════════════════════════
-   INIT
-═══════════════════════════════════════════════════ */
-(function init() {
-  const sess = getSession();
-  if (sess) startApp(sess);
-})();
+async function getCognitoUsername(code) {
+
+  const tokenUrl =
+    "https://ap-southeast-1joyo3q9c1.auth.ap-southeast-1.amazoncognito.com/oauth2/token";
+
+  const body =
+    `grant_type=authorization_code` +
+    `&client_id=eu0pplrgkq7pfpkjnohab92od` +
+    `&code=${code}` +
+    `&redirect_uri=${encodeURIComponent("https://dr6mr82mn4hj9.cloudfront.net")}`;
+
+  const response = await fetch(tokenUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body
+  });
+
+  const data = await response.json();
+
+  if (!data.id_token) {
+    throw new Error("No ID Token received");
+  }
+
+  const payload = JSON.parse(
+    atob(data.id_token.split(".")[1])
+  );
+
+  return (
+    payload["cognito:username"] ||
+    payload.preferred_username ||
+    payload.email
+  );
+}
+
+window.onload = async () => {
+
+  console.log("Page Loaded");
+
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get("code");
+
+  if (code) {
+
+    try {
+
+      const username =
+        await getCognitoUsername(code);
+
+      sessionStorage.setItem(
+        "loggedIn",
+        "true"
+      );
+
+      sessionStorage.setItem(
+        "username",
+        username
+      );
+
+      window.history.replaceState(
+        {},
+        document.title,
+        window.location.pathname
+      );
+
+      startApp(username);
+
+    } catch (err) {
+
+      console.error(err);
+
+      alert(
+        "Failed to get Cognito user details"
+      );
+
+      handleLogin();
+    }
+
+    return;
+  }
+
+  if (
+    sessionStorage.getItem("loggedIn")
+    === "true"
+  ) {
+
+    startApp(
+      sessionStorage.getItem("username")
+    );
+
+    return;
+  }
+
+  handleLogin();
+};
+
 </script>
 </body>
 </html>
