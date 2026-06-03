@@ -17,3 +17,15 @@ output "frontend_s3" {
 output "cloudfront_url" {
   value = "https://d1zro28al7bpzb.cloudfront.net"
 }
+
+output "cognito_user_pool_id" {
+  value = aws_cognito_user_pool.deestore_users.id
+}
+
+output "cognito_client_id" {
+  value = aws_cognito_user_pool_client.deestore_client.id
+}
+
+output "cognito_domain" {
+  value = aws_cognito_user_pool_domain.deestore_domain.domain
+}
