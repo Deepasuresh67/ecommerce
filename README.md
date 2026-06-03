@@ -1,11 +1,5 @@
 # 🛒 DEEStore
 ### Cloud-Native Serverless E-Commerce Platform on AWS
-![AWS](https://img.shields.io/badge/AWS-Cloud-orange?logo=amazon-aws) ![Terraform](https://img.shields.io/badge/Terraform-IaC-7B42BC?logo=terraform) ![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python) ![React](https://img.shields.io/badge/Frontend-HTML%2FCSS%2FJS-yellow) ![Cognito](https://img.shields.io/badge/Auth-Cognito-red?logo=amazon-aws) ![PyTest](https://img.shields.io/badge/Tests-PyTest-green?logo=pytest) ![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-black?logo=github-actions)
-
-> *"Build it serverless. Deploy it globally. Scale it infinitely."*
-
-⚡ Engineered for Scale. Designed for Simplicity. Deployed on the Cloud. ⚡
-
 ---
 
 ## 🌐 Live Demo
